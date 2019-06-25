@@ -16,11 +16,12 @@ class Display extends Component {
       .catch(err => console.log(err));
   };
 
+  // API call to fill DB with more items
   /* componentDidMount = () => {
     API.saveTodo({
-      title: "Yet nother test todo",
-      author: "Zach",
-      description: "Also learn to spell description",
+      title: "Oh man, another?",
+      author: "Zach2",
+      description: "Get this done",
       completed: false,
       submitted_at: Date.now
     })
@@ -36,7 +37,7 @@ class Display extends Component {
             <h1>Todo List:</h1>
             {this.state.pulledTodos.length ? (
               this.state.pulledTodos.map(Todo => {
-                return (
+                return Todo.completed === false ? (
                   <ToDoItem
                     key={Todo._id}
                     title={Todo.title}
@@ -44,7 +45,7 @@ class Display extends Component {
                     description={Todo.description}
                     completed={Todo.completed}
                   />
-                );
+                ) : null;
               })
             ) : (
               <h3>No Results</h3>
