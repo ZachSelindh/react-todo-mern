@@ -3,7 +3,7 @@ import API from "../../utils/API";
 import "./style.css";
 import ToDoItem from "../ToDoItem";
 
-class Display extends Component {
+class Completed extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,28 +17,15 @@ class Display extends Component {
       .catch(err => console.log(err));
   };
 
-  // API call to fill DB with more items
-  /*  componentDidMount = () => {
-    API.saveTodo({
-      title: "Test the completed condition",
-      author: "Zach",
-      description: "Testing 1,2,3",
-      completed: true,
-      submitted_at: Date.now
-    })
-      .then(res => this.setState({ pulledTodos: res.data }))
-      .catch(err => console.log(err));
-  }; */
-
   render() {
     return (
       <div className="container">
         <div className="row">
           <div id="display-area-z" className="col-12">
-            <h1>Todo List:</h1>
+            <h1>Completed Todos:</h1>
             {this.state.pulledTodos.length ? (
               this.state.pulledTodos.map(Todo => {
-                return Todo.completed === false ? (
+                return Todo.completed === true ? (
                   <ToDoItem
                     key={Todo._id}
                     title={Todo.title}
@@ -49,7 +36,7 @@ class Display extends Component {
                 ) : null;
               })
             ) : (
-              <h3>No Results</h3>
+              <h3>No Todos Completed Yet</h3>
             )}
           </div>
         </div>
@@ -58,4 +45,4 @@ class Display extends Component {
   }
 }
 
-export default Display;
+export default Completed;
