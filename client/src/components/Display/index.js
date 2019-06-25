@@ -16,11 +16,24 @@ class Display extends Component {
       .catch(err => console.log(err));
   };
 
+  /* componentDidMount = () => {
+    API.saveTodo({
+      title: "Yet nother test todo",
+      author: "Zach",
+      description: "Also learn to spell description",
+      completed: false,
+      submitted_at: Date.now
+    })
+      .then(res => this.setState({ pulledTodos: res.data }))
+      .catch(err => console.log(err));
+  }; */
+
   render() {
     return (
       <div className="container">
         <div className="row">
           <div id="display-area-z" className="col-12">
+            <h1>Todo List:</h1>
             {this.state.pulledTodos.length ? (
               this.state.pulledTodos.map(Todo => {
                 return (
@@ -29,6 +42,7 @@ class Display extends Component {
                     title={Todo.title}
                     author={Todo.author}
                     description={Todo.description}
+                    completed={Todo.completed}
                   />
                 );
               })
