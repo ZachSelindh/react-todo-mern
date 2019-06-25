@@ -1,0 +1,8 @@
+#display-area-z {
+  margin-top: 5%;
+  width: fit-content;
+  text-align: center;
+  height: fit-content;
+  background-color: rgb(255, 255, 255, 0.7);
+  border-bottom: 3px dashed black;
+}

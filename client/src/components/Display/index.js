@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import "./style.css";
+import ToDoItem from "../ToDoItem";
 
 class Display extends Component {
   constructor() {
@@ -17,8 +18,25 @@ class Display extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-lg-10 col-md-12" />
+      <div className="container">
+        <div className="row">
+          <div id="display-area-z" className="col-12">
+            {this.state.pulledTodos.length ? (
+              this.state.pulledTodos.map(Todo => {
+                return (
+                  <ToDoItem
+                    key={Todo._id}
+                    title={Todo.title}
+                    author={Todo.author}
+                    description={Todo.description}
+                  />
+                );
+              })
+            ) : (
+              <h3>No Results</h3>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
