@@ -1,0 +1,13 @@
+body {
+  background: url("https://cdn1.vectorstock.com/i/1000x1000/70/45/notebook-on-white-background-for-design-vector-15007045.jpg")
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: "Indie Flower", cursive;
+}
+
+.wrapper {
+  max-width: 100%;
+}

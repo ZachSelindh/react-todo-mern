@@ -1,0 +1,21 @@
+.todo-header {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+  height: 5em;
+  background-color: rgb(255, 255, 255, 0.7);
+  border-bottom: 3px dashed black;
+}
+
+.todo-header h1 {
+  display: inline-block;
+  height: fit-content;
+  vertical-align: middle;
+}
+
+.todo-header p {
+  font-size: 1.5em;
+  padding-top: 1em;
+  display: inline-block;
+  vertical-align: middle;
+}
