@@ -11,7 +11,7 @@ class Display extends Component {
   }
   componentDidMount = () => {
     API.getTodos()
-      .then(res => console.log(res))
+      .then(res => this.setState({ pulledTodos: res.data }))
       .catch(err => console.log(err));
   };
 
