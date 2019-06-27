@@ -3,7 +3,7 @@ import API from "../../utils/API";
 import "./style.css";
 import ToDoItem from "../ToDoItem";
 
-class Display extends Component {
+class ToDoPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -11,7 +11,7 @@ class Display extends Component {
     };
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     API.getTodos()
       .then(res => this.setState({ pulledTodos: res.data }))
       .catch(err => console.log(err));
@@ -58,4 +58,4 @@ class Display extends Component {
   }
 }
 
-export default Display;
+export default ToDoPage;
