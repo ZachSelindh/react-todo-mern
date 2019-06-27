@@ -17,6 +17,7 @@ class Header extends Component {
               <div className="row">
                 <a href="/">Home</a>
                 <a href="/completed">Completed</a>
+                <a href="/create"> Create</a>
               </div>
             </div>
           </div>
