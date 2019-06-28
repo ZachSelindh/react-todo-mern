@@ -17,7 +17,7 @@ class CreatePage extends Component {
       title: this.state.title,
       description: this.state.description
     })
-      .then(res => console.log(res))
+      .then(res => res.redirect("/"))
       .catch(err => console.log(err));
   };
 
