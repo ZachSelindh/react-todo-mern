@@ -19,11 +19,11 @@ class CreatePage extends Component {
     })
       .then(res => res.redirect("/"))
       .catch(err => console.log(err));
+    this.setState({ title: "", description: "" });
   };
 
   handleInputChange = event => {
     const { name, value } = event.target;
-
     this.setState({ [name]: value });
   };
 
@@ -34,6 +34,7 @@ class CreatePage extends Component {
           <div id="display-area-z" className="col-12">
             <h1>Enter your Todo:</h1>
             <form
+              className="todo-form"
               onSubmit={this.handleSubmit}
               action="/api/todos"
               method="POST"
@@ -42,12 +43,14 @@ class CreatePage extends Component {
                 type="text"
                 placeholder="Title"
                 name="title"
+                value={this.state.title}
                 onChange={this.handleInputChange}
               />
               <input
                 type="text"
                 placeholder="Description"
                 name="description"
+                value={this.state.description}
                 onChange={this.handleInputChange}
               />
               <button type="submit">Submit</button>
