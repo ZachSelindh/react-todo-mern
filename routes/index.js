@@ -9,7 +9,7 @@ router.use("/api/todos", apiRoutes);
 // User Routes
 router.use("/user", userRoutes);
 
-// Send React start point if no API routes are called.
+// Send React start point if no routes are called.
 router.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../client/public/index.html"));
 });
