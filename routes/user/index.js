@@ -2,13 +2,11 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/todoController");
 
-router.route("/").get((req, res) => res.json("GETUSer"));
-/* .post((req, res) => res.send("POSTUser")); */
+router.route("/register").post(userController.create);
 
-/* 
 router
   .route("/:id")
-  .put((req, res) => res.send("PUTUSer"))
-  .delete((req, res) => res.send("DELETEUSer")); */
+  .put(userController.update)
+  .delete(userController.delete);
 
 module.exports = router;
