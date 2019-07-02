@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import TodoPage from "./components/ToDoPage";
 import Completed from "./components/Completed";
 import CreatePage from "./components/CreatePage";
+import RegisterPage from "./components/Register";
 import "./App.css";
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
         <Router>
           <Route exact path="/" component={TodoPage} />
           <Route exact path="/completed" component={Completed} />
-          {<Route exact path="/create" component={CreatePage} />}
+          <Route exact path="/create" component={CreatePage} />
+          <Route exact path="/registration" component={RegisterPage} />
         </Router>
       </Wrapper>
     );

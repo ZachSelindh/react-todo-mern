@@ -12,5 +12,8 @@ export default {
   },
   saveTodo: function(todoData) {
     return axios.post("/api/todos", todoData);
+  },
+  registerUser: function(userData) {
+    return axios.post("/user/register", userData);
   }
 };
