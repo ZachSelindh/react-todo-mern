@@ -5,12 +5,10 @@ module.exports = {
   findAll: function(req, res) {
     User.find({}).then(users => res.send(users));
   },
-  create: function(req, res) {
+  create: (req, res) =>
     User.create(req.body)
-      /* .then(newUser => res.json(newUser)) */
-      .then(newUser => console.log(newUser))
-      .catch(err => res.status(422).json(err));
-  },
+      .then(newUser => res.json(newUser))
+      .catch(err => res.status(422).json(err)),
   update: function(req, res) {
     User.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(updatedUser => res.json(updatedUser))

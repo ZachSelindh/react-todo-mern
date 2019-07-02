@@ -22,7 +22,7 @@ class RegisterPage extends Component {
       photoURL: this.state.photoURL,
       email: this.state.email
     })
-      .then(res => res.send("Success"))
+      .then(res => console.log(res))
       .catch(err => console.log(err));
     this.setState({
       username: "",
