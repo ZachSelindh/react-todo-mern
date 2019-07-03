@@ -14,6 +14,7 @@ class ToDoPage extends Component {
     };
   }
 
+  // Seperated into its own function so it can be passed as prop.
   APIcalltodb = () => {
     API.getNotCompletedTodos()
       .then(res => this.setState({ pulledTodos: res.data }))
@@ -27,6 +28,7 @@ class ToDoPage extends Component {
   render() {
     return (
       <div>
+        {/* Passing function as prop in order to refresh call after todo is submitted. */}
         <CreateBar APIcalltodb={this.APIcalltodb} />
         <h1>Todo List:</h1>
         {this.state.pulledTodos.length ? (

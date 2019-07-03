@@ -10,12 +10,14 @@ class CreateBar extends Component {
       description: ""
     };
   }
+
   handleSubmit = event => {
     event.preventDefault();
     API.saveTodo({
       title: this.state.title,
       description: this.state.description
     })
+      // Calls the function passed as props, which calls the database to re-load the pulled items.
       .then(this.props.APIcalltodb())
       .catch(err => console.log(err));
     this.setState({ title: "", description: "" });
