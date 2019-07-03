@@ -1,8 +1,11 @@
 import axios from "axios";
 
 export default {
-  getTodos: function() {
-    return axios.get("/api/todos");
+  getNotCompletedTodos: function() {
+    return axios.get("/api/todos/not-completed");
+  },
+  getCompletedTodos: function() {
+    return axios.get("/api/todos/completed");
   },
   getTodo: function(id) {
     return axios.get("/api/todos/" + id);

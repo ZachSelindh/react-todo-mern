@@ -7,6 +7,10 @@ router
   .get(todoController.findAll)
   .post(todoController.create);
 
+router.route("/not-completed").get(todoController.findNotComplete);
+
+router.route("/completed").get(todoController.findCompleted);
+
 router
   .route("/:id")
   .put(todoController.update)

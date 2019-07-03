@@ -3,7 +3,19 @@ const Todo = require("../models/ToDoItem");
 // Defining methods for the todo controller.
 module.exports = {
   findAll: function(req, res) {
-    Todo.find({}).then(todo => res.send(todo));
+    Todo.find({})
+      .sort({ submitted_at: -1 })
+      .then(todo => res.send(todo));
+  },
+  findNotComplete: function(req, res) {
+    Todo.find({ completed: false })
+      .sort({ submitted_at: -1 })
+      .then(todo => res.send(todo));
+  },
+  findCompleted: function(req, res) {
+    Todo.find({ completed: true })
+      .sort({ submitted_at: -1 })
+      .then(todo => res.send(todo));
   },
   create: function(req, res) {
     Todo.create(req.body)

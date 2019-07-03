@@ -7,39 +7,35 @@ class Completed extends Component {
   constructor() {
     super();
     this.state = {
-      pulledTodos: []
+      completeTodos: []
     };
   }
 
   componentDidMount = () => {
-    API.getTodos()
-      .then(res => this.setState({ pulledTodos: res.data }))
+    API.getCompletedTodos()
+      .then(res => this.setState({ completeTodos: res.data }))
       .catch(err => console.log(err));
   };
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div id="display-area-z" className="col-12">
-            <h1>Completed Todos:</h1>
-            {this.state.pulledTodos.length ? (
-              this.state.pulledTodos.map(Todo => {
-                return Todo.completed === true ? (
-                  <ToDoItem
-                    key={Todo._id}
-                    title={Todo.title}
-                    author={Todo.author}
-                    description={Todo.description}
-                    completed={Todo.completed}
-                  />
-                ) : null;
-              })
-            ) : (
-              <h3>No Todos Completed Yet</h3>
-            )}
-          </div>
-        </div>
+      <div>
+        <h1>Completed Todos:</h1>
+        {this.state.completeTodos.length ? (
+          this.state.completeTodos.map(Todo => {
+            return (
+              <ToDoItem
+                key={Todo._id}
+                title={Todo.title}
+                author={Todo.author}
+                description={Todo.description}
+                completed={Todo.completed}
+              />
+            );
+          })
+        ) : (
+          <h3>No Todos Completed Yet</h3>
+        )}
       </div>
     );
   }

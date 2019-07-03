@@ -6,7 +6,8 @@ const userSchema = new Schema({
   password: { type: String /* , required: true */ },
   photoURL: { type: String /* , required: true */ },
   email: { type: String /* , required: true */ },
-  created_at: { type: Date, default: Date.now /* , required: true */ }
+  created_at: { type: Date, default: Date.now /* , required: true */ },
+  todos: [{ type: Schema.Types.ObjectId, ref: "To-do" }]
 });
 
 const User = mongoose.model("registered-users", userSchema);
