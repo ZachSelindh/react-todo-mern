@@ -31,7 +31,7 @@ class CreateBar extends Component {
   render() {
     return (
       <div>
-        <h1>Enter your Todo:</h1>
+        <h1>Enter new Todo:</h1>
         <form
           className="todo-form"
           onSubmit={this.handleSubmit}
