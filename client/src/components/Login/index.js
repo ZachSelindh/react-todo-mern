@@ -13,7 +13,16 @@ class LoginPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    API.loginUser({});
+    if (this.state.username.length && this.state.password.length) {
+      API.loginUser({
+        username: this.state.username,
+        password: this.state.password
+      })
+        .then(foundUser => console.log(foundUser))
+        .catch(err => console.log(err));
+    } else {
+      console.log("No");
+    }
   };
 
   handleInputChange = event => {
@@ -23,7 +32,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login-page">
         <h1>User Login</h1>
         <p> Enter your username and password </p>
         <form className="todo-form" onSubmit={this.handleSubmit}>
@@ -46,6 +55,11 @@ class LoginPage extends Component {
           <br />
           <br />
           <button type="submit">Submit</button>
+          <a href="/registration">
+            <br />
+            <br />
+            <p>I don't have an account</p>
+          </a>
         </form>
         <p> Password and username are case sensitive </p>
       </div>

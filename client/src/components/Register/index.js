@@ -16,21 +16,32 @@ class RegisterPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    API.registerUser({
-      username: this.state.username,
-      password: this.state.password,
-      photoURL: this.state.photoURL,
-      email: this.state.email
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    this.setState({
-      username: "",
-      password: "",
-      password2: "",
-      photoURL: "",
-      email: ""
-    });
+    if (
+      this.state.username.length &&
+      this.state.password.length &&
+      this.state.photoURL.length &&
+      this.state.email.length
+    ) {
+      API.registerUser({
+        username: this.state.username,
+        password: this.state.password,
+        photoURL: this.state.photoURL,
+        email: this.state.email
+      })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+      this.setState({
+        username: "",
+        password: "",
+        password2: "",
+        photoURL: "",
+        email: ""
+      });
+    } else if (this.state.password !== this.state.password2) {
+      console.log("Passwords do not match");
+    } else {
+      console.log("No");
+    }
   };
 
   handleInputChange = event => {
@@ -40,7 +51,7 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="register-page">
         <h1>User Registration</h1>
         <p> Enter your information </p>
         <form className="todo-form" onSubmit={this.handleSubmit}>
@@ -51,6 +62,8 @@ class RegisterPage extends Component {
             value={this.state.username}
             onChange={this.handleInputChange}
           />
+          <br />
+          <br />
           <input
             type="text"
             placeholder="Password"
@@ -58,6 +71,8 @@ class RegisterPage extends Component {
             value={this.state.password}
             onChange={this.handleInputChange}
           />
+          <br />
+          <br />
           <input
             type="text"
             placeholder="Repeat Password"
@@ -65,6 +80,8 @@ class RegisterPage extends Component {
             value={this.state.password2}
             onChange={this.handleInputChange}
           />
+          <br />
+          <br />
           <input
             type="text"
             placeholder="Photo URL"
@@ -72,6 +89,8 @@ class RegisterPage extends Component {
             value={this.state.photoURL}
             onChange={this.handleInputChange}
           />
+          <br />
+          <br />
           <input
             type="text"
             placeholder="Email Address"
@@ -79,8 +98,16 @@ class RegisterPage extends Component {
             value={this.state.email}
             onChange={this.handleInputChange}
           />
+          <br />
+          <br />
           <button type="submit">Submit</button>
+          <a href="/login">
+            <br />
+            <br />
+            <p>Take me to login</p>
+          </a>
         </form>
+        <p> All fields are case sensitive </p>
       </div>
     );
   }

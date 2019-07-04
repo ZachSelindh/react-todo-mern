@@ -11,11 +11,21 @@ router.route("/").get((req, res) =>
     .catch(err => console.log(err))
 );
 
-router.route("/register").post((req, res) =>
+router.route("/register-user").post((req, res) =>
   User.create(req.body)
     .then(newUser => res.json(newUser))
     .catch(err => res.status(422).json(err))
 );
+
+router.route("/login-user").get((req, res) => {
+  console.log(req);
+  const { loginUsername, loginPassword } = req.params;
+  console.log(loginPassword, loginUsername);
+  User.find({ username: loginUsername, password: loginPassword })
+    /* .then(foundUser => res.json(foundUser)) */
+    .then(foundUser => console.log(foundUser))
+    .catch(err => res.status(422).json(err));
+});
 
 router
   .route("/:id")
