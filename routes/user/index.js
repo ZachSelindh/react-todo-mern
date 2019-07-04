@@ -17,14 +17,12 @@ router.route("/register-user").post((req, res) =>
     .catch(err => res.status(422).json(err))
 );
 
-router.route("/login-user").get((req, res) => {
-  console.log(req);
-  const { loginUsername, loginPassword } = req.params;
-  /* console.log(loginPassword, loginUsername);
-  User.find({ username: loginUsername, password: loginPassword })
+router.route("/login-user").post((req, res) => {
+  // Pull username and password out of request using object destructuring.
+  const { username, password } = req.body;
+  User.find({ username: username, password: password })
     .then(foundUser => res.json(foundUser))
-    .then(foundUser => console.log(foundUser))
-    .catch(err => res.status(422).json(err)); */
+    .catch(err => res.status(422).json(err));
 });
 
 router

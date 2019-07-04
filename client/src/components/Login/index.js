@@ -18,8 +18,14 @@ class LoginPage extends Component {
         username: this.state.username,
         password: this.state.password
       })
-        .then(foundUser => console.log(foundUser))
+        .then(foundUser =>
+          console.log(`User found. Username: ${foundUser.data[0].username}`)
+        )
         .catch(err => console.log(err));
+      this.setState({
+        username: "",
+        password: ""
+      });
     } else {
       console.log("No");
     }

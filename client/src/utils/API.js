@@ -17,9 +17,9 @@ export default {
     return axios.post("/api/todos", todoData);
   },
   registerUser: function(newUserData) {
-    return axios.post("/user/register-user", newUserData);
+    return axios.post("/users/register-user", newUserData);
   },
   loginUser: function(userLoginData) {
-    return axios.get("/user/login-user", userLoginData);
+    return axios.post("/users/login-user", userLoginData);
   }
 };

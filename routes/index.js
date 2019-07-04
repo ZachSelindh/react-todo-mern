@@ -7,7 +7,7 @@ const userRoutes = require("./user");
 router.use("/api/todos", apiRoutes);
 
 // User Routes
-router.use("/user", userRoutes);
+router.use("/users", userRoutes);
 
 // Send React start point if no routes are called.
 router.use(function(req, res) {
