@@ -16,29 +16,35 @@ class RegisterPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    // Check if registration fields are empty
     if (
       this.state.username.length &&
       this.state.password.length &&
       this.state.photoURL.length &&
       this.state.email.length
     ) {
-      API.registerUser({
-        username: this.state.username,
-        password: this.state.password,
-        photoURL: this.state.photoURL,
-        email: this.state.email
-      })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
-      this.setState({
-        username: "",
-        password: "",
-        password2: "",
-        photoURL: "",
-        email: ""
-      });
-    } else if (this.state.password !== this.state.password2) {
-      console.log("Passwords do not match");
+      // Check if passwords match
+      if (this.state.password !== this.state.password2) {
+        console.log("Passwords do not match");
+      } else {
+        API.registerUser({
+          username: this.state.username,
+          password: this.state.password,
+          photoURL: this.state.photoURL,
+          email: this.state.email
+        })
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+        this.setState({
+          username: "",
+          password: "",
+          password2: "",
+          photoURL: "",
+          email: ""
+        });
+        // Turn this into a modal
+        alert("Successful registration!");
+      }
     } else {
       console.log("No");
     }
