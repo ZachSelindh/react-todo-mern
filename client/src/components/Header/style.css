@@ -17,3 +17,13 @@
   vertical-align: center;
   font-size: 1.5em;
 }
+
+#nav-header-z {
+  font-size: 1.5em;
+  padding-top: 0.5em;
+}
+
+#nav-header-z a {
+  margin: auto;
+  color: black;
+}
