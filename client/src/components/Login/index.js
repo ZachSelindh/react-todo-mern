@@ -18,17 +18,20 @@ class LoginPage extends Component {
         username: this.state.username,
         password: this.state.password
       })
-        .then(foundUser =>
-          console.log(`User found. Username: ${foundUser.data[0].username}`)
+        .then(
+          foundUser =>
+            console.log(`User found. Username: ${foundUser.data[0].username}`),
+          alert(`User logged in`)
         )
         .catch(err => console.log(err));
-      this.setState({
-        username: "",
-        password: ""
-      });
     } else {
       console.log("No");
+      alert("User not found");
     }
+    this.setState({
+      username: "",
+      password: ""
+    });
   };
 
   handleInputChange = event => {
