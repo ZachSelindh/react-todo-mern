@@ -5,3 +5,7 @@
 .error-message {
   color: red;
 }
+
+.form-item {
+  margin: auto;
+}

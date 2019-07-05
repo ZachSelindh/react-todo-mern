@@ -63,13 +63,6 @@ class RegisterPage extends Component {
     return (
       <div className="register-page">
         <h1>User Registration</h1>
-        {this.state.errors.length
-          ? this.state.errors.map(error => (
-              <p className="error-message" key={error.param + error.value}>
-                {error.msg}
-              </p>
-            ))
-          : null}
         <form className="todo-form" onSubmit={this.handleSubmit}>
           <p>Username: </p>
           <input
@@ -79,8 +72,15 @@ class RegisterPage extends Component {
             value={this.state.username}
             onChange={this.handleInputChange}
           />
-          <br />
-          <br />
+          {this.state.errors.length
+            ? this.state.errors.map(error =>
+                error.param === "username" ? (
+                  <p className="error-message" key={error.param + error.value}>
+                    {error.msg}
+                  </p>
+                ) : null
+              )
+            : null}
           <p>Password: </p>
           <input
             type="text"
@@ -89,8 +89,6 @@ class RegisterPage extends Component {
             value={this.state.password}
             onChange={this.handleInputChange}
           />
-          <br />
-          <br />
           <p>Repeat Password: </p>
           <input
             type="text"
@@ -99,8 +97,15 @@ class RegisterPage extends Component {
             value={this.state.password2}
             onChange={this.handleInputChange}
           />
-          <br />
-          <br />
+          {this.state.errors.length
+            ? this.state.errors.map(error =>
+                error.param === "password" ? (
+                  <p className="error-message" key={error.param + error.value}>
+                    {error.msg}
+                  </p>
+                ) : null
+              )
+            : null}
           <p>Profile Picture URL: </p>
           <input
             type="text"
@@ -109,8 +114,15 @@ class RegisterPage extends Component {
             value={this.state.photoURL}
             onChange={this.handleInputChange}
           />
-          <br />
-          <br />
+          {this.state.errors.length
+            ? this.state.errors.map(error =>
+                error.param === "photoURL" ? (
+                  <p className="error-message" key={error.param + error.value}>
+                    {error.msg}
+                  </p>
+                ) : null
+              )
+            : null}
           <p>Email Address: </p>
           <input
             type="text"
@@ -119,6 +131,15 @@ class RegisterPage extends Component {
             value={this.state.email}
             onChange={this.handleInputChange}
           />
+          {this.state.errors.length
+            ? this.state.errors.map(error =>
+                error.param === "email" ? (
+                  <p className="error-message" key={error.param + error.value}>
+                    {error.msg}
+                  </p>
+                ) : null
+              )
+            : null}
           <br />
           <br />
           <button type="submit">Submit</button>
