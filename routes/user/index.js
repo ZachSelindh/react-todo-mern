@@ -54,9 +54,22 @@ router.route("/register-user").post(
 router.route("/login-user").post((req, res) => {
   // Pull username and password out of request using object destructuring.
   const { username, password } = req.body;
-  User.find({ username: username, password: password })
+  // Hash password to compare it to DB
+
+  /* User.find({ username, password })
     .then(foundUser => res.json(foundUser))
-    .catch(err => res.status(422).json(err));
+    .catch(err => res.status(422).json(err)); */
+
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) {
+      throw err;
+    } else {
+      User.find({ username, password: hash })
+        .then(foundUser => console.log(foundUser))
+        /* .then(foundUser => res.json(foundUser)) */
+        .catch(err => res.status(422).json(err));
+    }
+  });
 });
 
 router
