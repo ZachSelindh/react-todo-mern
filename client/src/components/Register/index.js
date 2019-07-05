@@ -41,6 +41,8 @@ class RegisterPage extends Component {
               email: "",
               errors: []
             });
+            // Turn this into a modal
+            alert("Successful registration!");
           } else {
             console.log(res.status);
           }
@@ -49,8 +51,6 @@ class RegisterPage extends Component {
           var arrofErr = [...err.response.data.error.errors];
           this.setState({ errors: arrofErr });
         });
-      // Turn this into a modal
-      /* alert("Successful registration!"); */
     }
   };
 

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 
 // Test route for Postman
 router.route("/test").get((req, res) => res.json("TEST"));
@@ -34,10 +35,18 @@ router.route("/register-user").post(
       /* return res.status(422).json({ errors: errors.array() }); */
       res.status(422).send({ error: errors });
     } else {
+      // Object destructuring for DB vars
       const { username, email, password, photoURL } = req.body;
-      User.create({ username, email, password, photoURL })
-        .then(newUser => res.json(newUser))
-        .catch(err => res.status(422).json(err));
+      // BCrypt password hashing
+      bcrypt.hash(password, 10, function(err, hash) {
+        if (err) {
+          throw err;
+        }
+        // Create User at DB
+        User.create({ username, email, password: hash, photoURL })
+          .then(newUser => res.json(newUser))
+          .catch(err => res.status(422).json(err));
+      });
     }
   }
 );
