@@ -17,6 +17,7 @@ class Header extends Component {
               <div id="nav-header-z" className="row">
                 <a href="/">Home</a>
                 <a href="/completed">Completed</a>
+                <a href="/login">Login</a>
               </div>
             </div>
           </div>
