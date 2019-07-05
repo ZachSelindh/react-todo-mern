@@ -33,17 +33,19 @@ class RegisterPage extends Component {
           photoURL: this.state.photoURL,
           email: this.state.email
         })
-          .then(res => console.log(res))
+          .then(
+            res => console.log(res),
+            this.setState({
+              username: "",
+              password: "",
+              password2: "",
+              photoURL: "",
+              email: ""
+            })
+          )
           .catch(err => console.log(err));
-        this.setState({
-          username: "",
-          password: "",
-          password2: "",
-          photoURL: "",
-          email: ""
-        });
         // Turn this into a modal
-        alert("Successful registration!");
+        /* alert("Successful registration!"); */
       }
     } else {
       console.log("No");
