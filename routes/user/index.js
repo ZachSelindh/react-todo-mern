@@ -17,6 +17,14 @@ router.route("/register-user").post(
     check("username", "Username must be at least 5 characters").isLength({
       min: 5
     }),
+    check("password").custom((value, { req, loc, path }) => {
+      if (value !== req.body.password2) {
+        // throw error if passwords do not match
+        throw new Error("Passwords must match");
+      } else {
+        return value;
+      }
+    }),
     check("email", "Enter a valid email address").isEmail(),
     check("photoURL", "PhotoURL must be a valid URL").isURL()
   ],
