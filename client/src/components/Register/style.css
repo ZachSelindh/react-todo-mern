@@ -1,3 +1,7 @@
 .register-page a {
   color: black;
 }
+
+.error-message {
+  color: red;
+}

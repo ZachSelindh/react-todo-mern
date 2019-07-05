@@ -23,7 +23,8 @@ router.route("/register-user").post(
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).jsonp(errors.array());
+      /* return res.status(422).json({ errors: errors.array() }); */
+      res.status(422).send({ error: errors });
     } else {
       const { username, email, password, photoURL } = req.body;
       User.create({ username, email, password, photoURL })

@@ -10,7 +10,8 @@ class RegisterPage extends Component {
       password: "",
       password2: "",
       photoURL: "",
-      email: ""
+      email: "",
+      errors: []
     };
   }
 
@@ -23,32 +24,33 @@ class RegisterPage extends Component {
       this.state.photoURL.length &&
       this.state.email.length
     ) {
-      // Check if passwords match
-      if (this.state.password !== this.state.password2) {
-        console.log("Passwords do not match");
-      } else {
-        API.registerUser({
-          username: this.state.username,
-          password: this.state.password,
-          photoURL: this.state.photoURL,
-          email: this.state.email
-        })
-          .then(
-            res => console.log(res),
+      API.registerUser({
+        username: this.state.username,
+        password: this.state.password,
+        password2: this.state.password2,
+        photoURL: this.state.photoURL,
+        email: this.state.email
+      })
+        .then(res => {
+          if (res.status === 200) {
             this.setState({
               username: "",
               password: "",
               password2: "",
               photoURL: "",
-              email: ""
-            })
-          )
-          .catch(err => console.log(err));
-        // Turn this into a modal
-        /* alert("Successful registration!"); */
-      }
-    } else {
-      console.log("No");
+              email: "",
+              errors: []
+            });
+          } else {
+            console.log(res.status);
+          }
+        })
+        .catch(err => {
+          var arrofErr = [...err.response.data.error.errors];
+          this.setState({ errors: arrofErr });
+        });
+      // Turn this into a modal
+      /* alert("Successful registration!"); */
     }
   };
 
@@ -61,8 +63,15 @@ class RegisterPage extends Component {
     return (
       <div className="register-page">
         <h1>User Registration</h1>
-        <p> Enter your information </p>
+        {this.state.errors.length
+          ? this.state.errors.map(error => (
+              <p className="error-message" key={error.param + error.value}>
+                {error.msg}
+              </p>
+            ))
+          : null}
         <form className="todo-form" onSubmit={this.handleSubmit}>
+          <p>Username: </p>
           <input
             type="text"
             placeholder="Username"
@@ -72,6 +81,7 @@ class RegisterPage extends Component {
           />
           <br />
           <br />
+          <p>Password: </p>
           <input
             type="text"
             placeholder="Password"
@@ -81,6 +91,7 @@ class RegisterPage extends Component {
           />
           <br />
           <br />
+          <p>Repeat Password: </p>
           <input
             type="text"
             placeholder="Repeat Password"
@@ -90,6 +101,7 @@ class RegisterPage extends Component {
           />
           <br />
           <br />
+          <p>Profile Picture URL: </p>
           <input
             type="text"
             placeholder="Photo URL"
@@ -99,6 +111,7 @@ class RegisterPage extends Component {
           />
           <br />
           <br />
+          <p>Email Address: </p>
           <input
             type="text"
             placeholder="Email Address"
