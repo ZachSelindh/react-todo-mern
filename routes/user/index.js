@@ -56,20 +56,10 @@ router.route("/login-user").post((req, res) => {
   const { username, password } = req.body;
   // Hash password to compare it to DB
 
-  /* User.find({ username, password })
-    .then(foundUser => res.json(foundUser))
-    .catch(err => res.status(422).json(err)); */
-
-  bcrypt.hash(password, 10, (err, hash) => {
-    if (err) {
-      throw err;
-    } else {
-      User.find({ username, password: hash })
-        .then(foundUser => console.log(foundUser))
-        /* .then(foundUser => res.json(foundUser)) */
-        .catch(err => res.status(422).json(err));
-    }
-  });
+  User.findOne({ username })
+    .then(foundUser => console.log(foundUser.password))
+    /* .then(foundUser => res.json(foundUser)) */
+    .catch(err => res.status(422).json(err));
 });
 
 router
