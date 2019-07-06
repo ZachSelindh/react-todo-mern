@@ -18,10 +18,8 @@ class LoginPage extends Component {
         username: this.state.username,
         password: this.state.password
       })
-        .then(foundUser =>
-          console.log(`User found. Username: ${foundUser.data[0].username}`)
-        )
-        .catch(err => console.log(err));
+        .then(foundUser => console.log(foundUser.data._id))
+        .catch(err => console.log(err, "Hit the API error"));
     } else {
       console.log("No");
     }

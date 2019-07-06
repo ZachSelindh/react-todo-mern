@@ -32,7 +32,6 @@ router.route("/register-user").post(
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      /* return res.status(422).json({ errors: errors.array() }); */
       res.status(422).send({ error: errors });
     } else {
       // Object destructuring for DB vars
@@ -54,13 +53,31 @@ router.route("/register-user").post(
 router.route("/login-user").post((req, res) => {
   // Pull username and password out of request using object destructuring.
   const { username, password } = req.body;
-  // Hash password to compare it to DB
-
   User.findOne({ username })
-    .then(foundUser => console.log(foundUser.password))
-    /* .then(foundUser => res.json(foundUser)) */
+    .then(foundUser => {
+      if (!foundUser) {
+        res.status(422).send("Incorrect Password");
+      } else {
+        bcrypt
+          .compare(password, foundUser.password)
+          .then(result => {
+            if (result === true) {
+              res.send(foundUser);
+            }
+          })
+          .catch(err => res.status(422).json(err));
+      }
+    })
     .catch(err => res.status(422).json(err));
 });
+
+/* // Hash password to compare it to DB
+      bcrypt.compare(password, foundUser.password).then(res => {
+        if (!res) {
+          console.log("Incorrect passoword");
+        }
+        res.send(foundUser);
+      }) */
 
 router
   .route("/:id")
