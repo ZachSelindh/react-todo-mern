@@ -14,13 +14,15 @@ router.route("/").get((req, res) =>
 );
 
 router.route("/register-user").post(
+  // Array object that contains the express-validator checks
   [
     check("username", "Username must be at least 5 characters").isLength({
       min: 5
     }),
     check("password").custom((value, { req, loc, path }) => {
+      // Helpful code on StackOverflow for custom check in express-validator!
       if (value !== req.body.password2) {
-        // throw error if passwords do not match
+        // Throw error if passwords do not match
         throw new Error("Passwords must match");
       } else {
         return value;
@@ -53,11 +55,14 @@ router.route("/register-user").post(
 router.route("/login-user").post((req, res) => {
   // Pull username and password out of request using object destructuring.
   const { username, password } = req.body;
+  // Initially find user based on username alone.
   User.findOne({ username })
     .then(foundUser => {
+      // If no user found, return error.
       if (!foundUser) {
-        res.status(422).send("Incorrect Password");
+        res.status(422).send("User not found");
       } else {
+        // BCrypt compare function compares saved hash to input password.
         bcrypt
           .compare(password, foundUser.password)
           .then(result => {
@@ -70,14 +75,6 @@ router.route("/login-user").post((req, res) => {
     })
     .catch(err => res.status(422).json(err));
 });
-
-/* // Hash password to compare it to DB
-      bcrypt.compare(password, foundUser.password).then(res => {
-        if (!res) {
-          console.log("Incorrect passoword");
-        }
-        res.send(foundUser);
-      }) */
 
 router
   .route("/:id")

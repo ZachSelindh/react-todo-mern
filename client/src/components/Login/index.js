@@ -13,14 +13,17 @@ class LoginPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    // Check if username or password fields are blank.
     if (this.state.username.length && this.state.password.length) {
       API.loginUser({
         username: this.state.username,
         password: this.state.password
       })
+        // Logging the found user's db id. Change to Passport auth.
         .then(foundUser => console.log(foundUser.data._id))
         .catch(err => console.log(err, "Hit the API error"));
     } else {
+      // Change to modal?
       console.log("No");
     }
     this.setState({
