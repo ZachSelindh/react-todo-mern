@@ -3,15 +3,36 @@ const router = express.Router();
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const verifyToken = require("../../auth/verifyToken");
 
-// Test route for Postman
-router.route("/test").get((req, res) => res.json("TEST"));
+// Test route for Postman / JWT
+router.route("/test").get((req, res) => {
+  const user = {
+    id: 1,
+    username: "zach",
+    email: "zach@web.com"
+  };
+  jwt.sign({ user: user }, "secretkey", (err, token) => {
+    res.json({
+      token
+    });
+  });
+});
 
-router.route("/").get((req, res) =>
+// Test route for Postman / JWT
+router.get("/testtoken", verifyToken, (req, res) => {
+  res.json({
+    message: "Success"
+  });
+});
+
+// Why would you need to get all users?
+/* router.route("/").get((req, res) =>
   User.find({})
     .then(users => res.send(users))
     .catch(err => console.log(err))
-);
+); */
 
 router.route("/register-user").post(
   // Array object that contains the express-validator checks
@@ -76,7 +97,7 @@ router.route("/login-user").post((req, res) => {
     .catch(err => res.status(422).json(err));
 });
 
-router
+/* router
   .route("/:id")
   .put((req, res) =>
     User.findOneAndUpdate({ _id: req.params.id }, req.body)
@@ -88,6 +109,6 @@ router
       .then(deletedTodo => deletedTodo.remove())
       .then(deletedTodo => res.json(deletedTodo))
       .catch(err => res.status(422).json(err))
-  );
+  ); */
 
 module.exports = router;
