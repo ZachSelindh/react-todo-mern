@@ -91,9 +91,15 @@ router.route("/login-user").post((req, res) => {
           .compare(password, foundUser.password)
           .then(result => {
             if (result === true) {
-              jwt.sign({ foundUser }, "secretkey", (err, token) => {
-                res.json({ token });
-              });
+              // Issue a JWT
+              jwt.sign(
+                { foundUser },
+                "secretkey",
+                { expiresIn: "30s" },
+                (err, token) => {
+                  res.json({ token });
+                }
+              );
             }
           })
           .catch(err => res.status(422).json(err));
@@ -101,19 +107,5 @@ router.route("/login-user").post((req, res) => {
     })
     .catch(err => res.status(422).json(err));
 });
-
-/* router
-  .route("/:id")
-  .put((req, res) =>
-    User.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(updatedUser => res.json(updatedUser))
-      .catch(err => res.status(422).json(err))
-  )
-  .delete((req, res) =>
-    Todo.findById({ _id: req.params.id })
-      .then(deletedTodo => deletedTodo.remove())
-      .then(deletedTodo => res.json(deletedTodo))
-      .catch(err => res.status(422).json(err))
-  ); */
 
 module.exports = router;
