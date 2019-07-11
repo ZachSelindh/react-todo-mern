@@ -5,38 +5,26 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../../auth/verifyToken");
-
-// Test route for Postman / JWT
-router.route("/test").get((req, res) => {
-  const user = {
-    id: 1,
-    username: "zach",
-    email: "zach@web.com"
-  };
-  jwt.sign({ user: user }, "secretkey", (err, token) => {
-    res.json({
-      token
-    });
-  });
-});
+require("dotenv").config();
 
 // Test route for Postman / JWT
 router.get("/testtoken", verifyToken, (req, res) => {
-  jwt.verify(req.token, "secretkey", (err, authData) => {
+  // Checking req.token for the JWT
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {
-      res.status(403).json({ message: "No token found" });
+      res.status(403).json({ message: "Invalid token / No token found" });
     } else {
       res.json({
-        message: " Token verified",
-        authData
+        message: "Token verified",
+        currentUser: authData.foundUser._id
       });
     }
   });
-  res.json({
-    message: "Success"
-  });
+  // Return a message if the JWT verify is successful.
+  res.status(200).json({ message: "Successful test" });
 });
 
+// User registration page
 router.route("/register-user").post(
   // Array object that contains the express-validator checks
   [
@@ -56,6 +44,7 @@ router.route("/register-user").post(
     check("photoURL", "PhotoURL must be a valid URL").isURL()
   ],
   (req, res) => {
+    // Custom method that checks the validator errors.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(422).send({ error: errors });
@@ -76,6 +65,7 @@ router.route("/register-user").post(
   }
 );
 
+// User login page
 router.route("/login-user").post((req, res) => {
   // Pull username and password out of request using object destructuring.
   const { username, password } = req.body;
@@ -94,7 +84,7 @@ router.route("/login-user").post((req, res) => {
               // Issue a JWT
               jwt.sign(
                 { foundUser },
-                "secretkey",
+                process.env.SECRET_KEY,
                 { expiresIn: "30s" },
                 (err, token) => {
                   res.json({ token });
