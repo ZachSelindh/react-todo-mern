@@ -19,8 +19,8 @@ class LoginPage extends Component {
         username: this.state.username,
         password: this.state.password
       })
-        // Logging the found user's db id. Change to Passport auth.
-        .then(foundUser => console.log(foundUser.data._id))
+        // Logging JWT
+        .then(response => localStorage.setItem("token", response.data.token))
         .catch(err => console.log(err, "Hit the API error"));
     } else {
       // Change to modal?

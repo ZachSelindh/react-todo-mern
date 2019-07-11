@@ -22,17 +22,20 @@ router.route("/test").get((req, res) => {
 
 // Test route for Postman / JWT
 router.get("/testtoken", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "No token found" });
+    } else {
+      res.json({
+        message: " Token verified",
+        authData
+      });
+    }
+  });
   res.json({
     message: "Success"
   });
 });
-
-// Why would you need to get all users?
-/* router.route("/").get((req, res) =>
-  User.find({})
-    .then(users => res.send(users))
-    .catch(err => console.log(err))
-); */
 
 router.route("/register-user").post(
   // Array object that contains the express-validator checks
@@ -66,7 +69,7 @@ router.route("/register-user").post(
         }
         // Create User at DB
         User.create({ username, email, password: hash, photoURL })
-          .then(newUser => res.json(newUser))
+          .then(newUser => res.json({ newUser, message: "User created!" }))
           .catch(err => res.status(422).json(err));
       });
     }
@@ -88,7 +91,9 @@ router.route("/login-user").post((req, res) => {
           .compare(password, foundUser.password)
           .then(result => {
             if (result === true) {
-              res.send(foundUser);
+              jwt.sign({ foundUser }, "secretkey", (err, token) => {
+                res.json({ token });
+              });
             }
           })
           .catch(err => res.status(422).json(err));
