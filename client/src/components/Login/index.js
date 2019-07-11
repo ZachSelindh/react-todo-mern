@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
+import history from "../../utils/history";
 
 class LoginPage extends Component {
   constructor() {
@@ -20,7 +21,10 @@ class LoginPage extends Component {
         password: this.state.password
       })
         // Logging JWT
-        .then(response => localStorage.setItem("token", response.data.token))
+        .then(response => {
+          localStorage.setItem("token", response.data.token);
+          history.push(response.data.redirectURL);
+        })
         .catch(err => console.log(err, "Hit the API error"));
     } else {
       // Change to modal?
