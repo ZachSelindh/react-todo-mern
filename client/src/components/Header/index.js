@@ -12,7 +12,6 @@ class Header extends Component {
   componentWillMount = () => {
     var theUser = localStorage.getItem("currentUser");
     this.setState({ currentUser: theUser });
-    console.log(theUser);
   };
 
   render() {
@@ -20,19 +19,17 @@ class Header extends Component {
       <div className="row todo-header">
         <div className="col-12">
           <div className="row">
-            <div className="col-sm-6 col-md-4">
+            <div className="col-sm-12 col-md-5">
               <h1>MERN-stack Todo List</h1>
             </div>
             <div className="col-sm-6 col-md-3">
               <p>A full-stack todo app</p>
             </div>
-            <div className="col-sm-12 col-md-5">
+            <div className="col-sm-6 col-md-4">
               <div id="nav-header-z" className="row">
                 {this.state.currentUser !== "undefined" &&
                 this.state.currentUser ? (
-                  <a href="/login">Login</a>
-                ) : (
-                  <div>
+                  <div className="nav-bar-z">
                     <a className="nav-link-z" href="/">
                       Home
                     </a>
@@ -40,9 +37,11 @@ class Header extends Component {
                       Completed
                     </a>
                     <a className="nav-link-z" href="/logout">
-                      Logout - test
+                      Logout
                     </a>
                   </div>
+                ) : (
+                  <a href="/login">Login</a>
                 )}
               </div>
             </div>

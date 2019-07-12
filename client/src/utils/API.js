@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export default {
-  getNotCompletedTodos: function() {
+  getNotCompletedTodos: function(token) {
     return axios.get("/api/todos/not-completed", {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      headers: { Authorization: "Bearer " + token }
     });
   },
-  getCompletedTodos: function() {
+  getCompletedTodos: function(token) {
     return axios.get("/api/todos/completed", {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      headers: { Authorization: "Bearer " + token }
     });
   },
   getTodo: function(id) {

@@ -29,5 +29,9 @@
 }
 
 .nav-link-z {
-  padding: 1em;
+  padding: 0.5em;
+}
+
+.nav-bar-z {
+  margin: auto;
 }

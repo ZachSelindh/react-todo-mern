@@ -13,7 +13,8 @@ class Completed extends Component {
   }
 
   componentDidMount = () => {
-    API.getCompletedTodos()
+    this.setState({ completeTodos: [] });
+    API.getCompletedTodos({ token: localStorage.getItem("token") })
       .then(res => this.setState({ completeTodos: res.data }))
       .catch(err => {
         console.log(err);

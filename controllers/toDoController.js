@@ -7,21 +7,6 @@ module.exports = {
       .sort({ submitted_at: -1 })
       .then(todo => res.send(todo));
   },
-  findNotComplete: function(req, res) {
-    Todo.find({ completed: false })
-      .sort({ submitted_at: -1 })
-      .then(todo => res.send(todo));
-  },
-  findCompleted: function(req, res) {
-    Todo.find({ completed: true })
-      .sort({ submitted_at: -1 })
-      .then(todo => res.send(todo));
-  },
-  create: function(req, res) {
-    Todo.create(req.body)
-      .then(newTodo => res.json(newTodo))
-      .catch(err => res.status(422).json(err));
-  },
   update: function(req, res) {
     Todo.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(updatedTodo => res.json(updatedTodo))

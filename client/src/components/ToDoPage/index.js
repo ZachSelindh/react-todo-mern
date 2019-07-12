@@ -17,7 +17,8 @@ class ToDoPage extends Component {
 
   // Seperated into its own function so it can be passed as prop.
   APIcalltodb = () => {
-    API.getNotCompletedTodos()
+    this.setState({ pulledTodos: [] });
+    API.getNotCompletedTodos({ token: localStorage.getItem("token") })
       .then(res => this.setState({ pulledTodos: res.data }))
       .catch(err => {
         console.log(err);
