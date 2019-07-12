@@ -33,10 +33,14 @@ class LoginPage extends Component {
           });
         })
         .catch(err => {
-          var errorArr = this.state.errors;
-          errorArr.push({ nameError: "Username or password do not match" });
-          this.setState({ errors: errorArr });
+          this.setState({
+            errors: [{ nameError: "Username or password do not match" }]
+          });
         });
+    } else {
+      this.setState({
+        errors: [{ nameError: "You must fill in both fields" }]
+      });
     }
   };
 
