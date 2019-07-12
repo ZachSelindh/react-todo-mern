@@ -20,22 +20,29 @@ class Header extends Component {
       <div className="row todo-header">
         <div className="col-12">
           <div className="row">
-            <div className="col-sm-6 col-md-5">
+            <div className="col-sm-6 col-md-4">
               <h1>MERN-stack Todo List</h1>
             </div>
             <div className="col-sm-6 col-md-3">
               <p>A full-stack todo app</p>
             </div>
-            <div className="col-sm-12 col-md-4">
+            <div className="col-sm-12 col-md-5">
               <div id="nav-header-z" className="row">
                 {this.state.currentUser !== "undefined" &&
-                !this.state.currentUser.length ? (
-                  <div>
-                    <a href="/">Home</a>
-                    <a href="/completed">Completed</a>
-                  </div>
-                ) : (
+                this.state.currentUser ? (
                   <a href="/login">Login</a>
+                ) : (
+                  <div>
+                    <a className="nav-link-z" href="/">
+                      Home
+                    </a>
+                    <a className="nav-link-z" href="/completed">
+                      Completed
+                    </a>
+                    <a className="nav-link-z" href="/logout">
+                      Logout - test
+                    </a>
+                  </div>
                 )}
               </div>
             </div>

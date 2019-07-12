@@ -87,7 +87,7 @@ router.route("/login-user").post((req, res) => {
                 process.env.SECRET_KEY,
                 { expiresIn: "30s" },
                 (err, token) => {
-                  res.json({ token, redirectURL: "/" });
+                  res.json({ token, foundUser, redirectURL: "/" });
                 }
               );
             }
