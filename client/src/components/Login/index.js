@@ -8,7 +8,8 @@ class LoginPage extends Component {
     super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: []
     };
   }
 
@@ -22,18 +23,21 @@ class LoginPage extends Component {
       })
         // Logging JWT
         .then(response => {
+          console.log(response);
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("currentUser", response.data.currentUser);
           history.push(response.data.redirectURL);
+          this.setState({
+            username: "",
+            password: ""
+          });
         })
-        .catch(err => console.log(err, "Hit the API error"));
-    } else {
-      // Change to modal?
-      console.log("No");
+        .catch(err => {
+          var errorArr = this.state.errors;
+          errorArr.push({ nameError: "Username or password do not match" });
+          this.setState({ errors: errorArr });
+        });
     }
-    this.setState({
-      username: "",
-      password: ""
-    });
   };
 
   handleInputChange = event => {
@@ -47,6 +51,15 @@ class LoginPage extends Component {
         <h1>User Login</h1>
         <p> Enter your username and password </p>
         <form className="todo-form" onSubmit={this.handleSubmit}>
+          {this.state.errors.length
+            ? this.state.errors.map(error =>
+                error.nameError ? (
+                  <p className="error-message" key={error.nameError}>
+                    {error.nameError}
+                  </p>
+                ) : null
+              )
+            : null}
           <input
             type="text"
             placeholder="Username"

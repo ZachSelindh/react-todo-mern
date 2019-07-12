@@ -74,7 +74,7 @@ router.route("/login-user").post((req, res) => {
     .then(foundUser => {
       // If no user found, return error.
       if (!foundUser) {
-        res.status(422).send("User not found");
+        res.status(422).json({ errorMessage: "No user found" });
       } else {
         // BCrypt compare function compares saved hash to input password.
         bcrypt
@@ -92,10 +92,12 @@ router.route("/login-user").post((req, res) => {
               );
             }
           })
-          .catch(err => res.status(422).json(err));
+          .catch(err =>
+            res.status(422).json({ meme: "User not found at FindOne" })
+          );
       }
     })
-    .catch(err => res.status(422).json(err));
+    .catch(err => res.status(400).json({ errorMess: "Error at route" }));
 });
 
 module.exports = router;
