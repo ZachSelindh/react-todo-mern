@@ -92,12 +92,10 @@ router.route("/login-user").post((req, res) => {
               );
             }
           })
-          .catch(err =>
-            res.status(422).json({ meme: "User not found at FindOne" })
-          );
+          .catch(err => res.json({ err }));
       }
     })
-    .catch(err => res.status(400).json({ errorMess: "Error at route" }));
+    .catch(err => res.status(422).json(err));
 });
 
 module.exports = router;

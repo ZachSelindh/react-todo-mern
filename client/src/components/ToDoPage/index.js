@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import "./style.css";
 import CreateBar from "../CreateBar";
 import ToDoItem from "../ToDoItem";
+import history from "../../utils/history";
 
 class ToDoPage extends Component {
   constructor() {
@@ -18,7 +19,10 @@ class ToDoPage extends Component {
   APIcalltodb = () => {
     API.getNotCompletedTodos()
       .then(res => this.setState({ pulledTodos: res.data }))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        history.push("/login");
+      });
   };
 
   componentWillMount = () => {
