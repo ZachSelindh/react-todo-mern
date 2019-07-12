@@ -26,11 +26,11 @@ class LoginPage extends Component {
           console.log(response);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("currentUser", response.data.currentUser);
-          history.push(response.data.redirectURL);
           this.setState({
             username: "",
             password: ""
           });
+          history.push(response.data.redirectURL);
         })
         .catch(err => {
           this.setState({

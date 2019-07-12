@@ -12,6 +12,7 @@ class Header extends Component {
   componentWillMount = () => {
     var theUser = localStorage.getItem("currentUser");
     this.setState({ currentUser: theUser });
+    console.log(theUser);
   };
 
   render() {
@@ -27,14 +28,15 @@ class Header extends Component {
             </div>
             <div className="col-sm-12 col-md-4">
               <div id="nav-header-z" className="row">
-                {this.state.currentUser !== "undefined" ||
+                {this.state.currentUser !== "undefined" &&
                 !this.state.currentUser.length ? (
                   <div>
                     <a href="/">Home</a>
                     <a href="/completed">Completed</a>
-                    <a href="/login">Login</a>
                   </div>
-                ) : null}
+                ) : (
+                  <a href="/login">Login</a>
+                )}
               </div>
             </div>
           </div>
