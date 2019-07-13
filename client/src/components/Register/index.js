@@ -51,6 +51,10 @@ class RegisterPage extends Component {
           var arrofErr = [...err.response.data.error.errors];
           this.setState({ errors: arrofErr });
         });
+    } else {
+      var currentErrors = this.state.errors;
+      currentErrors.push({ param: "top", msg: "All fields must be filled in" });
+      this.setState({ errors: currentErrors });
     }
   };
 
@@ -65,26 +69,23 @@ class RegisterPage extends Component {
         <div className="row">
           <div id="user-display" className=" col-sm-12 col-md-4">
             <img
-              alt="User"
-              src={this.state.photoURL}
-              height="300px"
-              width="300px"
+              alt="User Display"
+              src={
+                this.state.photoURL.length
+                  ? this.state.photoURL
+                  : "https://png.pngtree.com/svg/20161110/d3396c299f.svg"
+              }
+              height="200px"
+              width="200px"
             />
+            <h2>{this.state.username}</h2>
           </div>
           <div className="col-sm-12 col-md-8">
             <h1>User Registration</h1>
             <form className="todo-form" onSubmit={this.handleSubmit}>
-              <p>Username: </p>
-              <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChange}
-              />
               {this.state.errors.length
                 ? this.state.errors.map(error =>
-                    error.param === "username" ? (
+                    error.param === "top" ? (
                       <p
                         className="error-message"
                         key={error.param + error.value}
@@ -94,74 +95,104 @@ class RegisterPage extends Component {
                     ) : null
                   )
                 : null}
-              <p>Password: </p>
-              <input
-                type="text"
-                placeholder="Password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChange}
-              />
-              <p>Repeat Password: </p>
-              <input
-                type="text"
-                placeholder="Repeat Password"
-                name="password2"
-                value={this.state.password2}
-                onChange={this.handleInputChange}
-              />
-              {this.state.errors.length
-                ? this.state.errors.map(error =>
-                    error.param === "password" ? (
-                      <p
-                        className="error-message"
-                        key={error.param + error.value}
-                      >
-                        {error.msg}
-                      </p>
-                    ) : null
-                  )
-                : null}
-              <p>Profile Picture URL: </p>
-              <input
-                type="text"
-                placeholder="Photo URL"
-                name="photoURL"
-                value={this.state.photoURL}
-                onChange={this.handleInputChange}
-              />
-              {this.state.errors.length
-                ? this.state.errors.map(error =>
-                    error.param === "photoURL" ? (
-                      <p
-                        className="error-message"
-                        key={error.param + error.value}
-                      >
-                        {error.msg}
-                      </p>
-                    ) : null
-                  )
-                : null}
-              <p>Email Address: </p>
-              <input
-                type="text"
-                placeholder="Email Address"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleInputChange}
-              />
-              {this.state.errors.length
-                ? this.state.errors.map(error =>
-                    error.param === "email" ? (
-                      <p
-                        className="error-message"
-                        key={error.param + error.value}
-                      >
-                        {error.msg}
-                      </p>
-                    ) : null
-                  )
-                : null}
+              <div className="form-item">
+                <p>Username: </p>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleInputChange}
+                />
+                {this.state.errors.length
+                  ? this.state.errors.map(error =>
+                      error.param === "username" ? (
+                        <p
+                          className="error-message"
+                          key={error.param + error.value}
+                        >
+                          {error.msg}
+                        </p>
+                      ) : null
+                    )
+                  : null}
+              </div>
+              <div className="form-item">
+                <p>Password: </p>
+                <input
+                  type="text"
+                  placeholder="Password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="form-item">
+                <p>Repeat Password: </p>
+                <input
+                  type="text"
+                  placeholder="Repeat Password"
+                  name="password2"
+                  value={this.state.password2}
+                  onChange={this.handleInputChange}
+                />
+                {this.state.errors.length
+                  ? this.state.errors.map(error =>
+                      error.param === "password" ? (
+                        <p
+                          className="error-message"
+                          key={error.param + error.value}
+                        >
+                          {error.msg}
+                        </p>
+                      ) : null
+                    )
+                  : null}
+              </div>
+              <div className="form-item">
+                <p>Profile Picture URL: </p>
+                <input
+                  type="text"
+                  placeholder="Photo URL"
+                  name="photoURL"
+                  value={this.state.photoURL}
+                  onChange={this.handleInputChange}
+                />
+                {this.state.errors.length
+                  ? this.state.errors.map(error =>
+                      error.param === "photoURL" ? (
+                        <p
+                          className="error-message"
+                          key={error.param + error.value}
+                        >
+                          {error.msg}
+                        </p>
+                      ) : null
+                    )
+                  : null}
+              </div>
+              <div className="form-item">
+                <p>Email Address: </p>
+                <input
+                  type="text"
+                  placeholder="Email Address"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleInputChange}
+                />
+                {this.state.errors.length
+                  ? this.state.errors.map(error =>
+                      error.param === "email" ? (
+                        <p
+                          className="error-message"
+                          key={error.param + error.value}
+                        >
+                          {error.msg}
+                        </p>
+                      ) : null
+                    )
+                  : null}
+              </div>
               <br />
               <br />
               <button type="submit">Submit</button>
