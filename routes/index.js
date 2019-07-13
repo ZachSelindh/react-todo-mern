@@ -2,7 +2,6 @@ const path = require("path");
 const router = require("express").Router();
 const apiRoutes = require("./api");
 const userRoutes = require("./user");
-const verifyToken = require("../auth/verifyToken");
 
 // API Routes
 router.use("/api/todos", apiRoutes);

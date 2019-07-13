@@ -20,7 +20,9 @@ class ToDoItem extends Component {
   };
 
   handleClick = () => {
-    history.push(`/profile/${this.props.author}`);
+    history.push(`/profile/${this.props.author}`, {
+      props: { userID: this.props.author }
+    });
   };
 
   render() {

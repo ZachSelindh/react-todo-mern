@@ -92,14 +92,29 @@ router.route("/get-username/:userID").get((req, res) => {
     .catch(err => res.status(422).json({ err }));
 });
 
-router.route("/:userID").get((req, res) => {
+/* router.route("/:userID").get((req, res) => {
   const { userID } = req.params;
+  console.log(userID);
   User.findOne({ _id: userID })
     .then(user => {
       const { username, photoURL, todos, email } = user;
       res.json({ username, photoURL, todos, email });
     })
     .catch(err => res.status(422).json({ msg: "User not found" }));
+}); */
+
+router.get("/userprofile/:userID", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      const { userID } = req.params;
+      // Return todos
+      User.findOne({ _id: userID })
+        .then(foundUser => res.json(foundUser))
+        .catch(err => console.log(err));
+    }
+  });
 });
 
 module.exports = router;
