@@ -9,3 +9,8 @@
 .form-item {
   margin: auto;
 }
+
+#user-display {
+  text-align: center;
+  padding: 2em;
+}

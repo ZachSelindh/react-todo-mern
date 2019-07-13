@@ -32,7 +32,7 @@ class ToDoPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="col-12">
         {/* Passing function as prop in order to refresh call after todo is submitted. */}
         <CreateBar APIcalltodb={this.APIcalltodb} />
         <h1>Todo List:</h1>

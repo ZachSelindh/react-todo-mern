@@ -17,12 +17,10 @@ class App extends Component {
         <Router history={history}>
           <div className="container">
             <div className="row">
-              <div id="display-area-z" className="col-12">
-                <Route exact path="/" component={TodoPage} />
-                <Route exact path="/completed" component={Completed} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/registration" component={RegisterPage} />
-              </div>
+              <Route exact path="/" component={TodoPage} />
+              <Route exact path="/completed" component={Completed} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/registration" component={RegisterPage} />
             </div>
           </div>
         </Router>

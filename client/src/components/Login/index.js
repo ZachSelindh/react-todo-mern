@@ -50,7 +50,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="login-page">
+      <div id="display-area-z" className="col-8 login-page">
         <h1>User Login</h1>
         <p> Enter your username and password </p>
         <form className="todo-form" onSubmit={this.handleSubmit}>
