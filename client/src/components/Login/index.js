@@ -23,7 +23,6 @@ class LoginPage extends Component {
       })
         // Logging JWT
         .then(response => {
-          console.log(response);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("currentUser", response.data.foundUser._id);
           this.setState({

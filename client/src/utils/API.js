@@ -11,14 +11,14 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  getTodo: function(id) {
+  getTodo: function(id, token) {
     return axios.get("/api/todos/" + id, {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      headers: { Authorization: "Bearer " + token }
     });
   },
-  deleteTodo: function(id) {
+  deleteTodo: function(id, token) {
     return axios.delete("/api/todos/" + id, {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      headers: { Authorization: "Bearer " + token }
     });
   },
   saveTodo: function(todoData) {
