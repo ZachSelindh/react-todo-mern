@@ -13,12 +13,16 @@ class CreateBar extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    API.saveTodo({
-      title: this.state.title,
-      description: this.state.description
-    })
+    API.saveTodo(
+      {
+        title: this.state.title,
+        description: this.state.description,
+        author: localStorage.getItem("currentUser")
+      },
+      localStorage.getItem("token")
+    )
       // Calls the function passed as props, which calls the database to re-load the pulled items.
-      .then(this.props.APIcalltodb())
+      .then(res => this.props.APIcalltodb())
       .catch(err => console.log(err));
     this.setState({ title: "", description: "" });
   };
@@ -34,7 +38,7 @@ class CreateBar extends Component {
         <h1>Enter new Todo:</h1>
         <form
           className="todo-form"
-          autocomplete="off"
+          autoComplete="off"
           onSubmit={this.handleSubmit}
           action="/api/todos"
           method="POST"

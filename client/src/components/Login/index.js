@@ -55,7 +55,7 @@ class LoginPage extends Component {
         <p> Enter your username and password </p>
         <form
           className="todo-form"
-          autocomplete="off"
+          autoComplete="off"
           onSubmit={this.handleSubmit}
         >
           {this.state.errors.length

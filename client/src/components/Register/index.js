@@ -84,7 +84,7 @@ class RegisterPage extends Component {
             <h1>User Registration</h1>
             <form
               className="todo-form"
-              autocomplete="off"
+              autoComplete="off"
               onSubmit={this.handleSubmit}
             >
               {this.state.errors.length

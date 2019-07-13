@@ -21,12 +21,10 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  saveTodo: function(todoData) {
-    return axios.post(
-      "/api/todos",
-      { headers: { Authorization: "Bearer " + localStorage.getItem("token") } },
-      todoData
-    );
+  saveTodo: function(todoData, token) {
+    return axios.post("/api/todos", todoData, {
+      headers: { Authorization: "Bearer " + token }
+    });
   },
   registerUser: function(newUserData) {
     return axios.post("/users/register-user", newUserData);

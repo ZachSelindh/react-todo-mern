@@ -9,9 +9,10 @@ require("dotenv").config();
 router.post("/", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
+      console.log(err);
+      /* res.status(403).json({ message: "Invalid token / No token found" }); */
     } else {
-      // Return todos
+      // Create todo
       Todo.create(req.body)
         .then(newTodo => res.json(newTodo))
         .catch(err => res.status(422).json(err));
