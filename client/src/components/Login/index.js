@@ -53,7 +53,11 @@ class LoginPage extends Component {
       <div id="display-area-z" className="col-8 login-page">
         <h1>User Login</h1>
         <p> Enter your username and password </p>
-        <form className="todo-form" onSubmit={this.handleSubmit}>
+        <form
+          className="todo-form"
+          autocomplete="off"
+          onSubmit={this.handleSubmit}
+        >
           {this.state.errors.length
             ? this.state.errors.map(error =>
                 error.nameError ? (
@@ -73,7 +77,7 @@ class LoginPage extends Component {
           <br />
           <br />
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             name="password"
             value={this.state.password}

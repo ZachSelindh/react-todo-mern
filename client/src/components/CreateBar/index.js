@@ -34,6 +34,7 @@ class CreateBar extends Component {
         <h1>Enter new Todo:</h1>
         <form
           className="todo-form"
+          autocomplete="off"
           onSubmit={this.handleSubmit}
           action="/api/todos"
           method="POST"

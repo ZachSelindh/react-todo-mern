@@ -82,7 +82,11 @@ class RegisterPage extends Component {
           </div>
           <div className="col-sm-12 col-md-8">
             <h1>User Registration</h1>
-            <form className="todo-form" onSubmit={this.handleSubmit}>
+            <form
+              className="todo-form"
+              autocomplete="off"
+              onSubmit={this.handleSubmit}
+            >
               {this.state.errors.length
                 ? this.state.errors.map(error =>
                     error.param === "top" ? (
@@ -120,7 +124,7 @@ class RegisterPage extends Component {
               <div className="form-item">
                 <p>Password: </p>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   name="password"
                   value={this.state.password}
@@ -130,7 +134,7 @@ class RegisterPage extends Component {
               <div className="form-item">
                 <p>Repeat Password: </p>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Repeat Password"
                   name="password2"
                   value={this.state.password2}
