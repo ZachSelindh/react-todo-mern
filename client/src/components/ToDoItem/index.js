@@ -12,7 +12,9 @@ class ToDoItem extends Component {
 
   componentWillMount = () => {
     API.getUsername(this.props.author)
-      .then(res => console.log(res))
+      .then(res => {
+        this.setState({ username: res.data });
+      })
       .catch(err => console.log(err));
   };
 
@@ -20,7 +22,7 @@ class ToDoItem extends Component {
     return (
       <div className="todo-item">
         <h1>{this.props.title}</h1>
-        <h5>Submitted by: {this.props.author}</h5>
+        <h5>Submitted by: {this.state.username}</h5>
         <p>{this.props.description}</p>
         <h4>Status: {this.props.completed ? "Completed!" : "Incomplete"}</h4>
       </div>
