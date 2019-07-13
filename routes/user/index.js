@@ -7,23 +7,6 @@ const jwt = require("jsonwebtoken");
 const verifyToken = require("../../auth/verifyToken");
 require("dotenv").config();
 
-// Test route for Postman / JWT
-router.get("/testtoken", verifyToken, (req, res) => {
-  // Checking req.token for the JWT
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      res.json({
-        message: "Token verified",
-        currentUser: authData.foundUser._id
-      });
-    }
-  });
-  // Return a message if the JWT verify is successful.
-  res.status(200).json({ message: "Successful test" });
-});
-
 // User registration page
 router.route("/register-user").post(
   // Array object that contains the express-validator checks
@@ -98,6 +81,7 @@ router.route("/login-user").post((req, res) => {
     .catch(err => res.status(422).json(err));
 });
 
+// API route for getting username for Todo component.
 router.route("/get-username/:userID").get((req, res) => {
   const { userID } = req.params;
   User.findOne({ _id: userID })
@@ -106,6 +90,16 @@ router.route("/get-username/:userID").get((req, res) => {
       res.send(username);
     })
     .catch(err => res.status(422).json({ err }));
+});
+
+router.route("/profile/:userID").get((req, res) => {
+  const { userID } = req.params;
+  User.findOne({ _id: userID })
+    .then(user => {
+      const { username, photoURL, todos, email } = user;
+      res.json({ username, photoURL, todos, email });
+    })
+    .catch(err => res.status(422).json({ msg: "User not found" }));
 });
 
 module.exports = router;

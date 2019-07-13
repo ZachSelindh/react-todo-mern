@@ -18,11 +18,21 @@ class ToDoItem extends Component {
       .catch(err => console.log(err));
   };
 
+  handleClick = () => {
+    API.getUserProfile(this.props.author)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="todo-item">
         <h1>{this.props.title}</h1>
-        <h5>Submitted by: {this.state.username}</h5>
+        <h5>
+          Submitted by:{" "}
+          <span onClick={this.handleClick}>{this.state.username}</span>
+        </h5>
+
         <p>{this.props.description}</p>
         <h4>Status: {this.props.completed ? "Completed!" : "Incomplete"}</h4>
       </div>

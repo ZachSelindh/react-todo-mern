@@ -24,7 +24,7 @@ class Completed extends Component {
 
   render() {
     return (
-      <div id="display-area-z" className="col-12">
+      <div id="display-area-z" className="col-8">
         <h1>Completed Todos:</h1>
         {this.state.completeTodos.length ? (
           this.state.completeTodos.map(Todo => {
