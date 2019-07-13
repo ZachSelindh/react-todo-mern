@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
+import history from "../../utils/history";
 
 class ToDoItem extends Component {
   constructor(props) {
@@ -19,9 +20,7 @@ class ToDoItem extends Component {
   };
 
   handleClick = () => {
-    API.getUserProfile(this.props.author)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    history.push(`/profile/${this.props.author}`);
   };
 
   render() {
@@ -30,7 +29,9 @@ class ToDoItem extends Component {
         <h1>{this.props.title}</h1>
         <h5>
           Submitted by:{" "}
-          <span onClick={this.handleClick}>{this.state.username}</span>
+          <span className="user-link" onClick={this.handleClick}>
+            {this.state.username}
+          </span>
         </h5>
 
         <p>{this.props.description}</p>

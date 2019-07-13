@@ -9,3 +9,8 @@
   text-align: left;
   text-decoration: underline;
 }
+
+.user-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

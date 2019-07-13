@@ -92,7 +92,7 @@ router.route("/get-username/:userID").get((req, res) => {
     .catch(err => res.status(422).json({ err }));
 });
 
-router.route("/profile/:userID").get((req, res) => {
+router.route("/:userID").get((req, res) => {
   const { userID } = req.params;
   User.findOne({ _id: userID })
     .then(user => {

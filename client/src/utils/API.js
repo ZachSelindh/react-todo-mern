@@ -36,6 +36,6 @@ export default {
     return axios.get("/users/get-username/" + userID);
   },
   getUserProfile: function(userID) {
-    return axios.get("users/profile/" + userID);
+    return axios.get("users/" + userID);
   }
 };
