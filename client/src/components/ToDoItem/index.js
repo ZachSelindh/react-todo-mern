@@ -1,7 +1,21 @@
 import React, { Component } from "react";
 import "./style.css";
+import API from "../../utils/API";
 
 class ToDoItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: ""
+    };
+  }
+
+  componentWillMount = () => {
+    API.getUsername(this.props.author)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div className="todo-item">

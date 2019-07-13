@@ -98,4 +98,12 @@ router.route("/login-user").post((req, res) => {
     .catch(err => res.status(422).json(err));
 });
 
+router.route("/get-username").get((req, res) => {
+  const { userID } = req.body;
+  console.log(req);
+  User.findById(userID)
+    .then(user => res.json(user))
+    .catch(err => res.status(422).json({ msg: "No user found" }));
+});
+
 module.exports = router;

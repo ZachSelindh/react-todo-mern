@@ -31,5 +31,8 @@ export default {
   },
   loginUser: function(userLoginData) {
     return axios.post("/users/login-user", userLoginData);
+  },
+  getUsername: function(userID) {
+    return axios.get("/users/get-username", userID);
   }
 };
