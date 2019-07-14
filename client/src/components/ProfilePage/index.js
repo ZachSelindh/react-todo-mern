@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "../Header";
 import API from "../../utils/API";
 import "./style.css";
 import history from "../../utils/history";
@@ -15,9 +16,19 @@ class ProfilePage extends Component {
   }
 
   componentWillMount = () => {
-    if (!localStorage.getItem("currentUser")) {
-      history.push("/login");
-    }
+    API.checkToken(localStorage.getItem("token"))
+      .then(res => {
+        console.log(res.data.message);
+      })
+      .catch(err => {
+        if (err.response.status === 403) {
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   componentDidMount = () => {
@@ -37,17 +48,22 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <div id="display-area-z" className="col-8">
-        <h1> Profile Page </h1>
-        <br />
-        <img
-          alt={this.state.username}
-          src={this.state.photoURL}
-          height="300px"
-          width="300px"
-        />
-        <h3>Username:</h3> <p>{this.state.username}</p>
-        <h4>Email:</h4> <p>{this.state.email}</p>
+      <div>
+        <Header />
+        <div className="container">
+          <div id="display-area-z" className="col-8">
+            <h1> Profile Page </h1>
+            <br />
+            <img
+              alt={this.state.username}
+              src={this.state.photoURL}
+              height="300px"
+              width="300px"
+            />
+            <h3>Username:</h3> <p>{this.state.username}</p>
+            <h4>Email:</h4> <p>{this.state.email}</p>
+          </div>
+        </div>
       </div>
     );
   }

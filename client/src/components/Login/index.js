@@ -13,6 +13,15 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidMount = () => {
+    API.checkToken(localStorage.getItem("token"))
+      .then(res => {
+        console.log(res.data.message);
+        history.push("/");
+      })
+      .catch(err => console.log(err));
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     // Check if username or password fields are blank.
