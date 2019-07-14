@@ -12,11 +12,17 @@ class Completed extends Component {
     };
   }
 
+  componentWillMount = () => {
+    if (!localStorage.getItem("currentUser")) {
+      history.push("/login");
+    }
+  };
+
   componentDidMount = () => {
     this.setState({ completeTodos: [] });
     API.getCompletedTodos(localStorage.getItem("token"))
       .then(res => this.setState({ completeTodos: res.data }))
-      .catch(err => console.log(err), history.push("/login"));
+      .catch(err => console.log(err));
   };
 
   render() {

@@ -32,7 +32,9 @@ export default {
   loginUser: function(userLoginData) {
     return axios.post("/users/login-user", userLoginData);
   },
-  getUser: function(userID) {
-    return axios.get("/users/get-user/" + userID);
+  getUser: function(userID, token) {
+    return axios.get("/users/get-user/" + userID, {
+      headers: { Authorization: "Bearer " + token }
+    });
   }
 };

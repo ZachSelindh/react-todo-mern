@@ -9,29 +9,33 @@ class ToDoPage extends Component {
   constructor() {
     super();
     this.state = {
-      pulledTodos: [],
-      title: "",
-      description: ""
+      pulledTodos: []
     };
   }
 
-  // Seperated into its own function so it can be passed as prop.
-  APIcalltodb = () => {
-    this.setState({ pulledTodos: [] });
+  calltodb = () => {
     API.getNotCompletedTodos(localStorage.getItem("token"))
       .then(res => this.setState({ pulledTodos: res.data }))
-      .catch(err => console.log(err), history.push("/login"));
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   componentDidMount = () => {
-    this.APIcalltodb();
+    this.calltodb();
+  };
+
+  componentWillMount = () => {
+    if (!localStorage.getItem("token")) {
+      history.push("/login");
+    }
   };
 
   render() {
     return (
       <div id="display-area-z" className="col-8">
         {/* Passing function as prop in order to refresh call after todo is submitted. */}
-        <CreateBar APIcalltodb={this.APIcalltodb} />
+        <CreateBar calltodb={this.calltodb} />
         <h1>Todo List:</h1>
         {this.state.pulledTodos.length ? (
           this.state.pulledTodos.map(Todo => {

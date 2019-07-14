@@ -15,7 +15,16 @@ class ProfilePage extends Component {
   }
 
   componentWillMount = () => {
-    API.getUser(this.props.location.pathname.replace("/profile/", ""))
+    if (!localStorage.getItem("currentUser")) {
+      history.push("/login");
+    }
+  };
+
+  componentDidMount = () => {
+    API.getUser(
+      this.props.location.pathname.replace("/profile/", ""),
+      localStorage.getItem("token")
+    )
       .then(res =>
         this.setState({
           username: res.data.username,
@@ -23,12 +32,7 @@ class ProfilePage extends Component {
           email: res.data.email
         })
       )
-      .catch(
-        err => console.log(err),
-        localStorage.removeItem("token"),
-        localStorage.removeItem("currentUser"),
-        history.push("/login")
-      );
+      .catch(err => console.log(err));
   };
 
   render() {

@@ -2,18 +2,6 @@ import React, { Component } from "react";
 import "./style.css";
 
 class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: []
-    };
-  }
-
-  componentWillMount = () => {
-    var theUser = localStorage.getItem("currentUser");
-    this.setState({ currentUser: theUser });
-  };
-
   render() {
     return (
       <div className="row todo-header">
@@ -27,8 +15,8 @@ class Header extends Component {
             </div>
             <div className="col-sm-6 col-md-4">
               <div id="nav-header-z" className="row">
-                {this.state.currentUser !== "undefined" &&
-                this.state.currentUser ? (
+                {localStorage.getItem("currentUser") &&
+                localStorage.getItem("currentUser") !== "undefined" ? (
                   <div className="nav-bar-z">
                     <a className="nav-link-z" href="/">
                       Home

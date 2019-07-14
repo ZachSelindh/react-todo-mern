@@ -12,7 +12,7 @@ class ToDoItem extends Component {
   }
 
   componentDidMount = () => {
-    API.getUser(this.props.author)
+    API.getUser(this.props.author, localStorage.getItem("token"))
       .then(res => {
         this.setState({
           username: res.data.username

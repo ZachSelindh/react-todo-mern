@@ -2,9 +2,13 @@ const path = require("path");
 const router = require("express").Router();
 const apiRoutes = require("./api");
 const userRoutes = require("./user");
+const tokenRoutes = require("./token");
 
 // API Routes
 router.use("/api/todos", apiRoutes);
+
+// Token Check route
+router.use("/token-check", tokenRoutes);
 
 // User Routes
 router.use("/users", userRoutes);
