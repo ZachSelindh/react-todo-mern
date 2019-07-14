@@ -82,14 +82,20 @@ router.route("/login-user").post((req, res) => {
 });
 
 // API route for getting username for Todo component.
-router.route("/get-user/:userID").get((req, res) => {
-  const { userID } = req.params;
-  User.findOne({ _id: userID })
-    .then(user => {
-      const { username, photoURL, email, todos } = user;
-      res.send({ username, photoURL, email, todos });
-    })
-    .catch(err => res.status(422).json({ err }));
+router.get("/get-user/:userID", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      const { userID } = req.params;
+      User.findOne({ _id: userID })
+        .then(user => {
+          const { username, photoURL, email } = user;
+          res.send({ username, photoURL, email });
+        })
+        .catch(err => res.status(422).json({ err }));
+    }
+  });
 });
 
 module.exports = router;

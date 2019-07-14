@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import "./style.css";
+import history from "../../utils/history";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -19,11 +20,10 @@ class ProfilePage extends Component {
         this.setState({
           username: res.data.username,
           photoURL: res.data.photoURL,
-          email: res.data.email,
-          todos: res.data.todos
+          email: res.data.email
         })
       )
-      .catch(err => console.log(err));
+      .catch(err => console.log(err), history.push("/login"));
   };
 
   render() {
