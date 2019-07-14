@@ -8,16 +8,21 @@ class ProfilePage extends Component {
     this.state = {
       username: "",
       photoURL: "",
-      email: ""
+      email: "",
+      todos: []
     };
   }
 
   componentWillMount = () => {
-    API.getUserProfile(
-      this.props.location.state.props.userID,
-      localStorage.getItem("token")
-    )
-      .then(res => console.log(res))
+    API.getUser(this.props.location.pathname.replace("/profile/", ""))
+      .then(res =>
+        this.setState({
+          username: res.data.username,
+          photoURL: res.data.photoURL,
+          email: res.data.email,
+          todos: res.data.todos
+        })
+      )
       .catch(err => console.log(err));
   };
 
@@ -25,6 +30,15 @@ class ProfilePage extends Component {
     return (
       <div id="display-area-z" className="col-8">
         <h1> Profile Page </h1>
+        <br />
+        <img
+          alt={this.state.username}
+          src={this.state.photoURL}
+          height="300px"
+          width="300px"
+        />
+        <h3>Username:</h3> <p>{this.state.username}</p>
+        <h4>Email:</h4> <p>{this.state.email}</p>
       </div>
     );
   }

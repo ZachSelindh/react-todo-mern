@@ -11,18 +11,18 @@ class ToDoItem extends Component {
     };
   }
 
-  componentWillMount = () => {
-    API.getUsername(this.props.author)
+  componentDidMount = () => {
+    API.getUser(this.props.author)
       .then(res => {
-        this.setState({ username: res.data });
+        this.setState({
+          username: res.data.username
+        });
       })
       .catch(err => console.log(err));
   };
 
   handleClick = () => {
-    history.push(`/profile/${this.props.author}`, {
-      props: { userID: this.props.author }
-    });
+    history.push(`/profile/${this.props.author}`);
   };
 
   render() {
