@@ -46,7 +46,7 @@ class ToDoPage extends Component {
         <div className="container">
           <div id="display-area-z" className="col-8">
             {/* Passing function as prop in order to refresh call after todo is submitted. */}
-            <CreateBar calltodb={this.calltodb} />
+            <CreateBar calltodbNotCompleted={this.calltodbNotCompleted} />
             <h1>Todo List:</h1>
             {this.state.pulledTodos.length ? (
               this.state.pulledTodos.map(Todo => {

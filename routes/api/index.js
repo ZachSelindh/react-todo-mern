@@ -60,6 +60,21 @@ router.get("/completed", verifyToken, (req, res) => {
   });
 });
 
+router.get("/author/:userID", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      // Return todos
+      const { userID } = req.params;
+      Todo.find({ author: userID })
+        .sort({ submitted_at: -1 })
+        .then(todos => res.send(todos))
+        .catch(err => res.status(422).json(err));
+    }
+  });
+});
+
 router
   .route("/:id")
   .put(todoController.update)

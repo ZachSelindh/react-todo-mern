@@ -16,6 +16,11 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
+  getAuthoredTodos: function(userID, token) {
+    return axios.get("/api/todos/author/" + userID, {
+      headers: { Authorization: "Bearer " + token }
+    });
+  },
   deleteTodo: function(id, token) {
     return axios.delete("/api/todos/" + id, {
       headers: { Authorization: "Bearer " + token }

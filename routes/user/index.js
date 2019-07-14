@@ -68,7 +68,7 @@ router.route("/login-user").post((req, res) => {
               jwt.sign(
                 { foundUser },
                 process.env.SECRET_KEY,
-                { expiresIn: "15s" },
+                { expiresIn: "200s" },
                 (err, token) => {
                   res.json({ token, foundUser, redirectURL: "/" });
                 }

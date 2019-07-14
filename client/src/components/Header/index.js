@@ -4,7 +4,7 @@ import API from "../../utils/API";
 import history from "../../utils/history";
 
 class Header extends Component {
-  componentWillUpdate = () => {
+  componentWillMount = () => {
     if (localStorage.getItem("token")) {
       API.checkToken(localStorage.getItem("token"))
         .then(res => {

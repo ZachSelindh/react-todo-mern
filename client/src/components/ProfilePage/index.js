@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../Header";
+import ToDoItem from "../ToDoItem";
 import API from "../../utils/API";
 import "./style.css";
 import history from "../../utils/history";
@@ -13,7 +14,17 @@ class ProfilePage extends Component {
       email: "",
       todos: []
     };
+    this.getTodosFromdb.bind(this);
   }
+
+  getTodosFromdb = () => {
+    API.getAuthoredTodos(
+      this.props.location.pathname.replace("/profile/", ""),
+      localStorage.getItem("token")
+    )
+      .then(res => this.setState({ todos: res.data }))
+      .catch(err => console.log(err));
+  };
 
   componentWillMount = () => {
     API.checkToken(localStorage.getItem("token"))
@@ -36,13 +47,14 @@ class ProfilePage extends Component {
       this.props.location.pathname.replace("/profile/", ""),
       localStorage.getItem("token")
     )
-      .then(res =>
+      .then(res => {
         this.setState({
           username: res.data.username,
           photoURL: res.data.photoURL,
           email: res.data.email
-        })
-      )
+        });
+        this.getTodosFromdb();
+      })
       .catch(err => console.log(err));
   };
 
@@ -62,6 +74,22 @@ class ProfilePage extends Component {
             />
             <h3>Username:</h3> <p>{this.state.username}</p>
             <h4>Email:</h4> <p>{this.state.email}</p>
+            <h1>Todo List:</h1>
+            {this.state.todos.length ? (
+              this.state.todos.map(Todo => {
+                return (
+                  <ToDoItem
+                    key={Todo._id}
+                    title={Todo.title}
+                    author={Todo.author}
+                    description={Todo.description}
+                    completed={Todo.completed}
+                  />
+                );
+              })
+            ) : (
+              <h3>No Results</h3>
+            )}
           </div>
         </div>
       </div>
