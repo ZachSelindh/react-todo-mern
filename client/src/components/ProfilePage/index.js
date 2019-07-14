@@ -23,7 +23,12 @@ class ProfilePage extends Component {
           email: res.data.email
         })
       )
-      .catch(err => console.log(err), history.push("/login"));
+      .catch(
+        err => console.log(err),
+        localStorage.removeItem("token"),
+        localStorage.removeItem("currentUser"),
+        history.push("/login")
+      );
   };
 
   render() {

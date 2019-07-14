@@ -20,13 +20,10 @@ class ToDoPage extends Component {
     this.setState({ pulledTodos: [] });
     API.getNotCompletedTodos(localStorage.getItem("token"))
       .then(res => this.setState({ pulledTodos: res.data }))
-      .catch(err => {
-        console.log(err);
-        history.push("/login");
-      });
+      .catch(err => console.log(err), history.push("/login"));
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.APIcalltodb();
   };
 

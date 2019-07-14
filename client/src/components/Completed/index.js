@@ -16,10 +16,7 @@ class Completed extends Component {
     this.setState({ completeTodos: [] });
     API.getCompletedTodos(localStorage.getItem("token"))
       .then(res => this.setState({ completeTodos: res.data }))
-      .catch(err => {
-        console.log(err);
-        history.push("/login");
-      });
+      .catch(err => console.log(err), history.push("/login"));
   };
 
   render() {
