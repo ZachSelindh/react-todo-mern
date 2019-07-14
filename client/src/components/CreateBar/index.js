@@ -22,7 +22,7 @@ class CreateBar extends Component {
       localStorage.getItem("token")
     )
       // Calls the function passed as props, which calls the database to re-load the pulled items.
-      .then(res => console.log(res), this.props.calltodb())
+      .then(res => console.log(res), this.props.calltodbNotCompleted())
       .catch(err => console.log(err));
     this.setState({ title: "", description: "" });
   };

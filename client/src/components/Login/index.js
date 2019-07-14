@@ -59,49 +59,51 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div id="display-area-z" className="col-8 login-page">
-        <h1>User Login</h1>
-        <p> Enter your username and password </p>
-        <form
-          className="todo-form"
-          autoComplete="off"
-          onSubmit={this.handleSubmit}
-        >
-          {this.state.errors.length
-            ? this.state.errors.map(error =>
-                error.nameError ? (
-                  <p className="error-message" key={error.nameError}>
-                    {error.nameError}
-                  </p>
-                ) : null
-              )
-            : null}
-          <input
-            type="text"
-            placeholder="Username"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <br />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <br />
-          <button type="submit">Submit</button>
-          <a href="/registration">
+      <div className="container">
+        <div id="display-area-z" className="col-8 login-page">
+          <h1>User Login</h1>
+          <p> Enter your username and password </p>
+          <form
+            className="todo-form"
+            autoComplete="off"
+            onSubmit={this.handleSubmit}
+          >
+            {this.state.errors.length
+              ? this.state.errors.map(error =>
+                  error.nameError ? (
+                    <p className="error-message" key={error.nameError}>
+                      {error.nameError}
+                    </p>
+                  ) : null
+                )
+              : null}
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={this.state.username}
+              onChange={this.handleInputChange}
+            />
             <br />
             <br />
-            <p>I don't have an account</p>
-          </a>
-        </form>
-        <p> Password and username are case sensitive </p>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleInputChange}
+            />
+            <br />
+            <br />
+            <button type="submit">Submit</button>
+            <a href="/registration">
+              <br />
+              <br />
+              <p>I don't have an account</p>
+            </a>
+          </form>
+          <p> Password and username are case sensitive </p>
+        </div>
       </div>
     );
   }
