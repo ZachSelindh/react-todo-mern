@@ -38,7 +38,7 @@ export default {
     });
   },
   checkToken: function(token) {
-    return axios.get("token-check/", {
+    return axios.get("/check-token/", {
       headers: { Authorization: "Bearer " + token }
     });
   }

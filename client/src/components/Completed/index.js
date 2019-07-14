@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import "./style.css";
 import ToDoItem from "../ToDoItem";
-import history from "../../utils/history";
+import "./style.css";
 
 class Completed extends Component {
   constructor() {
@@ -12,14 +11,7 @@ class Completed extends Component {
     };
   }
 
-  componentWillMount = () => {
-    if (!localStorage.getItem("currentUser")) {
-      history.push("/login");
-    }
-  };
-
   componentDidMount = () => {
-    this.setState({ completeTodos: [] });
     API.getCompletedTodos(localStorage.getItem("token"))
       .then(res => this.setState({ completeTodos: res.data }))
       .catch(err => console.log(err));

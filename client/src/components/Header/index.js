@@ -1,7 +1,35 @@
 import React, { Component } from "react";
+import API from "../../utils/API";
+import history from "../../utils/history";
 import "./style.css";
 
 class Header extends Component {
+  constructor() {
+    super();
+    this.state = {
+      validToken: false
+    };
+  }
+
+  logoutUser = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
+    history.push("/login");
+  };
+
+  componentDidMount = () => {
+    API.checkToken(localStorage.getItem("token"))
+      .then(
+        res => console.log(res.data.message),
+        this.setState({ validToken: true })
+      )
+      .catch(
+        err => console.log(err.data.message),
+        this.setState({ validToken: false })
+        /* this.logoutUser() */
+      );
+  };
+
   render() {
     return (
       <div className="row todo-header">
@@ -15,8 +43,7 @@ class Header extends Component {
             </div>
             <div className="col-sm-6 col-md-4">
               <div id="nav-header-z" className="row">
-                {localStorage.getItem("currentUser") &&
-                localStorage.getItem("currentUser") !== "undefined" ? (
+                {this.state.validToken === true ? (
                   <div className="nav-bar-z">
                     <a className="nav-link-z" href="/">
                       Home

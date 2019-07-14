@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import "./style.css";
 import CreateBar from "../CreateBar";
 import ToDoItem from "../ToDoItem";
-import history from "../../utils/history";
+import "./style.css";
 
 class ToDoPage extends Component {
   constructor() {
@@ -23,12 +22,6 @@ class ToDoPage extends Component {
 
   componentDidMount = () => {
     this.calltodb();
-  };
-
-  componentWillMount = () => {
-    if (!localStorage.getItem("token")) {
-      history.push("/login");
-    }
   };
 
   render() {

@@ -22,7 +22,7 @@ class App extends Component {
               <Route exact path="/completed" component={Completed} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/registration" component={RegisterPage} />
-              <Route path="/profile/:id" component={ProfilePage} />
+              <Route exact path="/profile/:id" component={ProfilePage} />
             </div>
           </div>
         </Router>

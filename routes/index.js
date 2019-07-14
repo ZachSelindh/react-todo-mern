@@ -8,7 +8,7 @@ const tokenRoutes = require("./token");
 router.use("/api/todos", apiRoutes);
 
 // Token Check route
-router.use("/token-check", tokenRoutes);
+router.use("/check-token", tokenRoutes);
 
 // User Routes
 router.use("/users", userRoutes);

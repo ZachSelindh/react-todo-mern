@@ -13,10 +13,6 @@ class LoginPage extends Component {
     };
   }
 
-  /* componentWillMount = () => {
-    if()
-  } */
-
   handleSubmit = event => {
     event.preventDefault();
     // Check if username or password fields are blank.
