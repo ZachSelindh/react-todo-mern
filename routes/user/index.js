@@ -73,6 +73,8 @@ router.route("/login-user").post((req, res) => {
                   res.json({ token, foundUser, redirectURL: "/" });
                 }
               );
+            } else {
+              res.status(422).json({ errorMessage: "Incorrect password" });
             }
           })
           .catch(err => res.json({ err }));

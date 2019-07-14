@@ -41,6 +41,7 @@ class LoginPage extends Component {
           history.push(response.data.redirectURL);
         })
         .catch(err => {
+          console.log(err.response.data.errorMessage);
           this.setState({
             errors: [{ nameError: "Username or password do not match" }]
           });
