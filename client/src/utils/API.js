@@ -36,5 +36,10 @@ export default {
     return axios.get("/users/get-user/" + userID, {
       headers: { Authorization: "Bearer " + token }
     });
+  },
+  checkToken: function(token) {
+    return axios.get("token-check/", {
+      headers: { Authorization: "Bearer " + token }
+    });
   }
 };

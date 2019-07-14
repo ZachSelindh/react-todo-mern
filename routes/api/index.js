@@ -9,8 +9,7 @@ require("dotenv").config();
 router.post("/", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {
-      console.log(err);
-      /* res.status(403).json({ message: "Invalid token / No token found" }); */
+      res.status(403).json({ message: "Invalid token / No token found" });
     } else {
       // Create todo
       Todo.create(req.body)
@@ -41,7 +40,8 @@ router.get("/not-completed", verifyToken, (req, res) => {
       // Return todos
       Todo.find({ completed: false })
         .sort({ submitted_at: -1 })
-        .then(todo => res.send(todo));
+        .then(todo => res.send(todo))
+        .catch(err => res.status(422).json(err));
     }
   });
 });
@@ -54,7 +54,8 @@ router.get("/completed", verifyToken, (req, res) => {
       // Return todos
       Todo.find({ completed: true })
         .sort({ submitted_at: -1 })
-        .then(todo => res.send(todo));
+        .then(todo => res.send(todo))
+        .catch(err => res.status(422).json(err));
     }
   });
 });
