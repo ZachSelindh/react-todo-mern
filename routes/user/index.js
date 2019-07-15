@@ -17,8 +17,8 @@ router.route("/register-user").post(
     check("username").custom((value, { req }) => {
       const checkUsername = req.body.username;
       // Check if username is already in use.
-      return User.findOne({ checkUsername }).then((res, err) => {
-        if (err) {
+      return User.findOne({ username: checkUsername }).then((res, err) => {
+        if (!res) {
           return value;
         } else {
           throw new Error("Username is already in use");
@@ -38,8 +38,8 @@ router.route("/register-user").post(
     check("email").custom((value, { req }) => {
       const checkEmail = req.body.email;
       // Check if email is already in use.
-      return User.findOne({ checkEmail }).then((res, err) => {
-        if (err) {
+      return User.findOne({ email: checkEmail }).then((res, err) => {
+        if (!res) {
           return value;
         } else {
           throw new Error("Email is already in use");
@@ -50,7 +50,7 @@ router.route("/register-user").post(
   ],
   (req, res) => {
     // Custom method that checks the validator errors.
-    const errors = validationResult(req);
+    var errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(422).send({ error: errors });
     } else {
@@ -64,7 +64,7 @@ router.route("/register-user").post(
         // Create User at DB
         User.create({ username, email, password: hash, photoURL })
           .then(newUser => res.json({ newUser, message: "User created!" }))
-          .catch(err => res.status(422).json(err));
+          .catch(err => res.status(420).json(err));
       });
     }
   }

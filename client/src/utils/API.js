@@ -37,8 +37,8 @@ export default {
   loginUser: function(userLoginData) {
     return axios.post("/users/login-user", userLoginData);
   },
-  loginNewUser: function(userLoginData) {
-    return axios.post("/users/login-new-user", userLoginData);
+  loginNewUser: function(newUserLoginData) {
+    return axios.post("/users/login-new-user", newUserLoginData);
   },
   getUser: function(userID, token) {
     return axios.get("/users/get-user/" + userID, {
