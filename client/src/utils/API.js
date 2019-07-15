@@ -22,7 +22,7 @@ export default {
     });
   },
   deleteTodo: function(id, token) {
-    return axios.delete("/api/todos/" + id, {
+    return axios.delete("/api/todos/delete/" + id, {
       headers: { Authorization: "Bearer " + token }
     });
   },

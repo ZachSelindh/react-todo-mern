@@ -63,7 +63,11 @@ class ToDoItem extends Component {
 
           <div className="col-4">
             {this.state.currentAuthor ? (
-              <DeleteButton author={this.props.author} />
+              <DeleteButton
+                todoID={this.props.todoID}
+                author={this.props.author}
+                calltodbNotCompleted={this.props.calltodbNotCompleted}
+              />
             ) : null}
           </div>
         </div>

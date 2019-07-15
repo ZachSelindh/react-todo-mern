@@ -75,9 +75,17 @@ router.get("/author/:userID", verifyToken, (req, res) => {
   });
 });
 
-router
-  .route("/:id")
-  .put(todoController.update)
-  .delete(todoController.remove);
+router.delete("/delete/:id", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      const { id } = req.params;
+      Todo.findOneAndRemove({ _id: id })
+        .then(res => res.send(res))
+        .catch(err => res.json(err));
+    }
+  });
+});
 
 module.exports = router;

@@ -53,10 +53,12 @@ class ToDoPage extends Component {
                 return (
                   <ToDoItem
                     key={Todo._id}
+                    todoID={Todo._id}
                     title={Todo.title}
                     author={Todo.author}
                     description={Todo.description}
                     completed={Todo.completed}
+                    calltodbNotCompleted={this.calltodbNotCompleted}
                   />
                 );
               })
