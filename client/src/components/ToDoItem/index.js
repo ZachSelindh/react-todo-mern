@@ -7,7 +7,8 @@ class ToDoItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ""
+      username: "",
+      validUser: false
     };
   }
 
@@ -15,10 +16,15 @@ class ToDoItem extends Component {
     API.getUser(this.props.author, localStorage.getItem("token"))
       .then(res => {
         this.setState({
-          username: res.data.username
+          username: res.data.username,
+          validUser: true
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.response.status === 422) {
+          this.setState({ username: "User not found", validUser: false });
+        }
+      });
   };
 
   handleClick = () => {
@@ -31,9 +37,13 @@ class ToDoItem extends Component {
         <h1>{this.props.title}</h1>
         <h5>
           Submitted by:{" "}
-          <span className="user-link" onClick={this.handleClick}>
-            {this.state.username}
-          </span>
+          {this.state.validUser ? (
+            <span className="user-link" onClick={this.handleClick}>
+              {this.state.username}
+            </span>
+          ) : (
+            <span>{this.state.username}</span>
+          )}
         </h5>
 
         <p>{this.props.description}</p>
