@@ -14,7 +14,18 @@ router.route("/register-user").post(
     check("username", "Username must be at least 5 characters").isLength({
       min: 5
     }),
-    check("password").custom((value, { req, loc, path }) => {
+    check("username").custom((value, { req }) => {
+      const checkUsername = req.body.username;
+      // Check if username is already in use.
+      return User.findOne({ checkUsername }).then((res, err) => {
+        if (err) {
+          return value;
+        } else {
+          throw new Error("Username is already in use");
+        }
+      });
+    }),
+    check("password").custom((value, { req }) => {
       // Helpful code on StackOverflow for custom check in express-validator!
       if (value !== req.body.password2) {
         // Throw error if passwords do not match
@@ -24,6 +35,17 @@ router.route("/register-user").post(
       }
     }),
     check("email", "Enter a valid email address").isEmail(),
+    check("email").custom((value, { req }) => {
+      const checkEmail = req.body.email;
+      // Check if email is already in use.
+      return User.findOne({ checkEmail }).then((res, err) => {
+        if (err) {
+          return value;
+        } else {
+          throw new Error("Email is already in use");
+        }
+      });
+    }),
     check("photoURL", "PhotoURL must be a valid URL").isURL()
   ],
   (req, res) => {
@@ -78,6 +100,32 @@ router.route("/login-user").post((req, res) => {
             }
           })
           .catch(err => res.json({ err }));
+      }
+    })
+    .catch(err => res.status(422).json(err));
+});
+
+// User login page for after registration
+router.route("/login-new-user").post((req, res) => {
+  // Pull username and password out of request using object destructuring.
+  const { username, password } = req.body;
+  // Initially find user based on username alone.
+  User.findOne({ username, password })
+    .then(foundUser => {
+      // If no user found, return error.
+      if (!foundUser) {
+        res.status(422).json({
+          errorMessage: "No user found, something went wrong at Registration"
+        });
+      } else {
+        jwt.sign(
+          { foundUser },
+          process.env.SECRET_KEY,
+          { expiresIn: "200s" },
+          (err, token) => {
+            res.json({ token, foundUser, redirectURL: "/" });
+          }
+        );
       }
     })
     .catch(err => res.status(422).json(err));

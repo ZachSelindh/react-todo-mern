@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import "./style.css";
 import API from "../../utils/API";
+import history from "../../utils/history";
+import "./style.css";
 
 class RegisterPage extends Component {
   constructor() {
@@ -11,7 +12,8 @@ class RegisterPage extends Component {
       password2: "",
       photoURL: "",
       email: "",
-      errors: []
+      errors: [],
+      registered: false
     };
   }
 
@@ -39,12 +41,18 @@ class RegisterPage extends Component {
               password2: "",
               photoURL: "",
               email: "",
-              errors: []
+              errors: [],
+              registered: true
             });
-            // Turn this into a modal
-            alert("Successful registration!");
+            console.log(res.data.newUser);
+            API.loginNewUser(res.data.newUser)
+              .then(res => {
+                console.log(res);
+                history.push(res.data.redirectURL);
+              })
+              .catch(err => console.log(err));
           } else {
-            console.log(res.status);
+            console.log(res);
           }
         })
         .catch(err => {
@@ -80,6 +88,9 @@ class RegisterPage extends Component {
                 width="200px"
               />
               <h2>{this.state.username}</h2>
+              <h2>
+                {this.state.registered ? "User successfully registered!" : null}
+              </h2>
             </div>
             <div className="col-sm-12 col-md-8">
               <h1>User Registration</h1>

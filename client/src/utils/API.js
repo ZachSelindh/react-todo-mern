@@ -37,6 +37,9 @@ export default {
   loginUser: function(userLoginData) {
     return axios.post("/users/login-user", userLoginData);
   },
+  loginNewUser: function(userLoginData) {
+    return axios.post("/users/login-new-user", userLoginData);
+  },
   getUser: function(userID, token) {
     return axios.get("/users/get-user/" + userID, {
       headers: { Authorization: "Bearer " + token }

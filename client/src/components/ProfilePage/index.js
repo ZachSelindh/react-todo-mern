@@ -74,6 +74,7 @@ class ProfilePage extends Component {
             />
             <h3>Username:</h3> <p>{this.state.username}</p>
             <h4>Email:</h4> <p>{this.state.email}</p>
+            <br />
             <h1>Todo List:</h1>
             {this.state.todos.length ? (
               this.state.todos.map(Todo => {
@@ -88,7 +89,7 @@ class ProfilePage extends Component {
                 );
               })
             ) : (
-              <h3>No Results</h3>
+              <h3>This user hasn't created any todos yet</h3>
             )}
           </div>
         </div>
