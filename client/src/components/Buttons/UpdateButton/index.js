@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../../../utils/API";
+import history from "../../../utils/history";
 import "./style.css";
 
 class DeleteButton extends Component {
@@ -7,7 +8,12 @@ class DeleteButton extends Component {
     var todoID = this.props.todoID;
     console.log(todoID);
     API.getTodo(todoID, localStorage.getItem("token"))
-      .then(res => console.log(res.data))
+      .then(res =>
+        history.push({
+          pathname: `/edit/todo/${todoID}`,
+          state: { props: res.data }
+        })
+      )
       .catch(err => console.log(err));
   };
 

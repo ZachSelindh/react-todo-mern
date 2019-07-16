@@ -6,6 +6,7 @@ import Completed from "./components/Completed";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/Register";
 import ProfilePage from "./components/ProfilePage";
+import EditTodo from "./components/EditTodo";
 import history from "../src/utils/history";
 import "./App.css";
 
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/registration" component={RegisterPage} />
           <Route exact path="/profile/:id" component={ProfilePage} />
+          <Route exact path="/edit/todo/:id" component={EditTodo} />
         </Router>
       </Wrapper>
     );
