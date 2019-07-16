@@ -9,6 +9,7 @@ require("dotenv").config();
 router.get("/", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return todos
     Todo.find({})
       .sort({ submitted_at: -1 })
@@ -19,6 +20,7 @@ router.get("/", verifyToken, (req, res) => {
 router.get("/not-completed", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return not completed todos
     Todo.find({ completed: false })
       .sort({ submitted_at: -1 })
@@ -30,6 +32,7 @@ router.get("/not-completed", verifyToken, (req, res) => {
 router.get("/completed", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return todos
     Todo.find({ completed: true })
       .sort({ submitted_at: -1 })
@@ -41,6 +44,7 @@ router.get("/completed", verifyToken, (req, res) => {
 router.post("/", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Create todo
     Todo.create(req.body)
       .then(newTodo => res.json(newTodo))
@@ -52,6 +56,7 @@ router.post("/", verifyToken, (req, res) => {
 router.get("/todo/:todoID", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Get todo info
     Todo.findById({ _id: req.params.todoID })
       .then(todo => res.send(todo))
@@ -63,6 +68,7 @@ router.get("/todo/:todoID", verifyToken, (req, res) => {
 router.get("/author/:userID", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return todos by author
     Todo.find({ author: req.params.userID })
       .sort({ submitted_at: -1 })
@@ -75,6 +81,7 @@ router.get("/author/:userID", verifyToken, (req, res) => {
 router.put("/todo/update/:todoID", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return updated todos
     Todo.findOneAndUpdate(
       { _id: req.params.todoID, author: req.body.user, completed: false },
@@ -89,6 +96,7 @@ router.put("/todo/update/:todoID", verifyToken, (req, res) => {
 router.put("/todo/complete/:todoID", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     // Return updated todos
     Todo.findOneAndUpdate(
       { _id: req.params.todoID, author: req.body.author, completed: false },
@@ -113,7 +121,9 @@ router.delete("/todo/delete/", (config, res) => {
         // Return deleted todos
         const { id, user } = config.body;
         Todo.findOneAndDelete({ _id: id, author: user })
-          .then(deletedTodo => res.status(200).json(deletedTodo))
+          .then(deletedTodo => {
+            res.status(200).json({ deletedTodo });
+          })
           .catch(err => res.status(422).send(err));
       }
     });

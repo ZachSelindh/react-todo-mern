@@ -46,24 +46,27 @@ class Completed extends Component {
     return (
       <div>
         <Header />
-
-        <div id="display-area-z" className="col-8">
-          <h1>Completed Todos:</h1>
-          {this.state.completeTodos.length ? (
-            this.state.completeTodos.map(Todo => {
-              return (
-                <ToDoItem
-                  key={Todo._id}
-                  title={Todo.title}
-                  author={Todo.author}
-                  description={Todo.description}
-                  completed={Todo.completed}
-                />
-              );
-            })
-          ) : (
-            <h3>No Todos Completed Yet</h3>
-          )}
+        <div className="container">
+          <div id="display-area-z" className="col-8">
+            <h1>Completed Todos:</h1>
+            {this.state.completeTodos.length ? (
+              this.state.completeTodos.map(Todo => {
+                return (
+                  <ToDoItem
+                    key={Todo._id}
+                    todoID={Todo._id}
+                    title={Todo.title}
+                    author={Todo.author}
+                    description={Todo.description}
+                    completed={Todo.completed}
+                    calltodbCompleted={this.calltodbCompleted}
+                  />
+                );
+              })
+            ) : (
+              <h3>No Todos Completed Yet</h3>
+            )}
+          </div>
         </div>
       </div>
     );

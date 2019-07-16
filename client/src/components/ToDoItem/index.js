@@ -82,6 +82,7 @@ class ToDoItem extends Component {
                   todoID={this.props.todoID}
                   author={this.props.author}
                   calltodbNotCompleted={this.props.calltodbNotCompleted}
+                  calltodbCompleted={this.props.calltodbCompleted}
                 />
               </div>
             ) : null}

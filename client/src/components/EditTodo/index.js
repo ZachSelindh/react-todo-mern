@@ -75,7 +75,7 @@ class EditTodo extends Component {
       <div>
         <Header />
         <div className="container">
-          <div id="display-area-z" className="col-8">
+          <div id="display-area-z" className="col-8 edit-page">
             <div>
               <h1>Edit your Todo:</h1>
               {this.state.updated ? <p>Todo updated!</p> : null}
@@ -100,6 +100,11 @@ class EditTodo extends Component {
                 <button type="submit">Submit</button>
               </form>
             </div>
+            {this.state.updated ? (
+              <a href="/">
+                <p>Take me Home</p>
+              </a>
+            ) : null}
           </div>
         </div>
       </div>

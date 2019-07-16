@@ -7,6 +7,7 @@ class DeleteButton extends Component {
   handleClick = () => {
     var currentUser = localStorage.getItem("currentUser");
     var thisPostid = this.props.todoID;
+    console.log(thisPostid);
     if (
       typeof currentUser !== "undefined" &&
       typeof thisPostid !== "undefined"
@@ -16,8 +17,13 @@ class DeleteButton extends Component {
         localStorage.getItem("token")
       )
         .then(res => {
-          console.log(res);
-          this.props.calltodbNotCompleted();
+          if (res.data.deletedTodo.completed === true) {
+            this.props.calltodbCompleted();
+          } else if (res.data.deletedTodo.completed === false) {
+            this.props.calltodbNotCompleted();
+          } else {
+            console.log(res);
+          }
         })
         .catch(err => {
           if (err.response.status === 403) {

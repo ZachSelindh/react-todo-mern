@@ -136,6 +136,7 @@ router.route("/login-new-user").post((req, res) => {
 router.get("/get-user/:userID", verifyToken, (req, res) => {
   checkToken(
     req,
+    res,
     User.findOne({ _id: req.params.userID })
       .then(user => {
         const { username, photoURL, email } = user;

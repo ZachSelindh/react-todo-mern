@@ -22,7 +22,11 @@ class CreateBar extends Component {
       localStorage.getItem("token")
     )
       // Calls the function passed as props, which calls the database to re-load the pulled items.
-      .then(res => console.log(res), this.props.calltodbNotCompleted())
+      .then(
+        res => console.log(res),
+        this.setState({ title: "", description: "" }),
+        this.props.calltodbNotCompleted()
+      )
       .catch(err => console.log(err));
     this.setState({ title: "", description: "" });
   };
@@ -47,14 +51,14 @@ class CreateBar extends Component {
             type="text"
             placeholder="Title"
             name="title"
-            value={this.title}
+            value={this.state.title}
             onChange={this.handleInputChange}
           />
           <input
             type="text"
             placeholder="Description"
             name="description"
-            value={this.description}
+            value={this.state.description}
             onChange={this.handleInputChange}
           />
           <button type="submit">Submit</button>
