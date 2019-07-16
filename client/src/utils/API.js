@@ -31,9 +31,13 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  deleteTodo: function(id, token) {
-    return axios.delete("/api/todos/delete/" + id, {
-      headers: { Authorization: "Bearer " + token }
+  deleteTodo: function(todoDelete, token) {
+    return axios.delete("/api/todos/todo/delete/", {
+      data: {
+        id: todoDelete.id,
+        user: todoDelete.user,
+        headers: { Authorization: "Bearer " + token }
+      }
     });
   },
   registerUser: function(newUserData) {

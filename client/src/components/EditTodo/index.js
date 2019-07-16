@@ -50,7 +50,8 @@ class EditTodo extends Component {
       this.state.id,
       {
         title: this.state.title,
-        description: this.state.description
+        description: this.state.description,
+        user: localStorage.getItem("currentUser")
       },
       localStorage.getItem("token")
     )

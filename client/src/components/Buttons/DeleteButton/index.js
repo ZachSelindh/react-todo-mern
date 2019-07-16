@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../../../utils/API";
+import history from "../../../utils/history";
 import "./style.css";
 
 class DeleteButton extends Component {
@@ -10,12 +11,23 @@ class DeleteButton extends Component {
       typeof currentUser !== "undefined" &&
       typeof thisPostid !== "undefined"
     ) {
-      API.deleteTodo(thisPostid, localStorage.getItem("token"))
+      API.deleteTodo(
+        { id: thisPostid, user: currentUser },
+        localStorage.getItem("token")
+      )
         .then(res => {
           console.log(res);
           this.props.calltodbNotCompleted();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          if (err.response.status === 403) {
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            console.log(err);
+          }
+        });
     } else {
       console.log("Props not properly passed: Deletion failed.");
     }

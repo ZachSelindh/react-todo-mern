@@ -3,10 +3,9 @@ import API from "../../../utils/API";
 import history from "../../../utils/history";
 import "./style.css";
 
-class DeleteButton extends Component {
+class UpdateButton extends Component {
   handleClick = () => {
     var todoID = this.props.todoID;
-    console.log(todoID);
     API.getTodo(todoID, localStorage.getItem("token"))
       .then(res =>
         history.push({
@@ -32,4 +31,4 @@ class DeleteButton extends Component {
   }
 }
 
-export default DeleteButton;
+export default UpdateButton;

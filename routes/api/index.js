@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const todoController = require("../../controllers/todoController");
 const Todo = require("../../models/ToDoItem");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../../auth/verifyToken");
@@ -90,6 +89,7 @@ router.get("/author/:userID", verifyToken, (req, res) => {
   });
 });
 
+// Update/edit a todo
 router.put("/todo/update/:todoID", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {
@@ -97,8 +97,9 @@ router.put("/todo/update/:todoID", verifyToken, (req, res) => {
     } else {
       // Return todos
       const { todoID } = req.params;
+      const { user } = req.body;
       Todo.findOneAndUpdate(
-        { _id: todoID },
+        { _id: todoID, author: user },
         { title: req.body.title, description: req.body.description }
       )
         .then(updatedTodo => res.send(updatedTodo))
@@ -108,17 +109,25 @@ router.put("/todo/update/:todoID", verifyToken, (req, res) => {
 });
 
 // Route for deleing a todo
-router.delete("/delete/:id", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      const { id } = req.params;
-      Todo.findOneAndRemove({ _id: id })
-        .then(todo => res.status(200).send(todo))
-        .catch(err => res.status(422).json(err));
-    }
-  });
+router.delete("/todo/delete/", (config, res) => {
+  const authHeader = config.body.headers.Authorization;
+  if (typeof authHeader !== "undefined") {
+    const authBearer = authHeader.split(" ");
+    const bearerToken = authBearer[1];
+    jwt.verify(bearerToken, process.env.SECRET_KEY, (err, authData) => {
+      if (err) {
+        res.status(403).json({ message: "Invalid token / No token found" });
+      } else {
+        // Return deleted todos
+        const { id, user } = config.body;
+        Todo.findOneAndDelete({ _id: id, author: user })
+          .then(deletedTodo => res.status(200).json(deletedTodo))
+          .catch(err => res.status(422).send(err));
+      }
+    });
+  } else {
+    res.status(403).json({ message: "No user login found" });
+  }
 });
 
 module.exports = router;
