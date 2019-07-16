@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import DeleteButton from "../Buttons/DeleteButton";
 import UpdateButton from "../Buttons/UpdateButton";
-import "./style.css";
+import CompleteButton from "../Buttons/CompleteButton";
 import API from "../../utils/API";
 import history from "../../utils/history";
+import "./style.css";
 
 class ToDoItem extends Component {
   constructor(props) {
@@ -67,7 +68,16 @@ class ToDoItem extends Component {
           <div className="col-4">
             {this.state.currentAuthor ? (
               <div>
-                <UpdateButton todoID={this.props.todoID} />
+                {this.props.completed ? null : (
+                  <div>
+                    <CompleteButton
+                      todoID={this.props.todoID}
+                      author={this.props.author}
+                      calltodbNotCompleted={this.props.calltodbNotCompleted}
+                    />
+                    <UpdateButton todoID={this.props.todoID} />
+                  </div>
+                )}
                 <DeleteButton
                   todoID={this.props.todoID}
                   author={this.props.author}

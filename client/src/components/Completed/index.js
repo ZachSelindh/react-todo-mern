@@ -29,8 +29,13 @@ class Completed extends Component {
           this.calltodbCompleted();
         })
         .catch(err => {
-          console.log(err);
-          history.push("/login");
+          if (err.response.status === 403) {
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            console.log(err);
+          }
         });
     } else {
       history.push("/login");

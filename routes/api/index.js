@@ -77,10 +77,24 @@ router.put("/todo/update/:todoID", verifyToken, (req, res) => {
     req,
     // Return updated todos
     Todo.findOneAndUpdate(
-      { _id: req.params.todoID, author: req.body.user },
+      { _id: req.params.todoID, author: req.body.user, completed: false },
       { title: req.body.title, description: req.body.description }
     )
       .then(updatedTodo => res.send(updatedTodo))
+      .catch(err => res.json(err))
+  );
+});
+
+// Mark a todo completed
+router.put("/todo/complete/:todoID", verifyToken, (req, res) => {
+  checkToken(
+    req,
+    // Return updated todos
+    Todo.findOneAndUpdate(
+      { _id: req.params.todoID, author: req.body.author, completed: false },
+      { completed: true }
+    )
+      .then(completedTodo => res.send(completedTodo))
       .catch(err => res.json(err))
   );
 });

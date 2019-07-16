@@ -26,6 +26,11 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
+  completeTodo: function(compTodoID, compTodoData, token) {
+    return axios.put("/api/todos/todo/complete/" + compTodoID, compTodoData, {
+      headers: { Authorization: "Bearer " + token }
+    });
+  },
   updateTodo: function(updateTodoID, newTodoData, token) {
     return axios.put("/api/todos/todo/update/" + updateTodoID, newTodoData, {
       headers: { Authorization: "Bearer " + token }
