@@ -111,7 +111,16 @@ class RegisterPage extends Component {
             </div>
             <div className="col-sm-12 col-md-8">
               {this.state.registered ? (
-                <h2 className="registered-alert">New user registered!</h2>
+                <div>
+                  <h2 className="registered-alert">
+                    User successfully registered!
+                  </h2>
+                  <br />
+                  <br />
+                  <a href="/">
+                    <p>Take me to the Front Page</p>
+                  </a>
+                </div>
               ) : (
                 <div>
                   <h1>User Registration</h1>
@@ -235,12 +244,8 @@ class RegisterPage extends Component {
                     <button type="submit">Submit</button>
                     <br />
                     <br />
-                    {localStorage.getItem("currentUser") ? (
+                    {this.state.registered ? null : (
                       <a href="/login">
-                        <p>Take me Home</p>
-                      </a>
-                    ) : (
-                      <a href="/">
                         <p>Take me to login</p>
                       </a>
                     )}
