@@ -17,8 +17,9 @@ router.use("/users", userRoutes);
 router.use(function(req, res) {
   res.sendFile(
     path.join(
-      (__dirname, "../client/build/index.html") ||
-        (__dirname, "../client/public/index.html")
+      __dirname,
+      "../client/build/index.html"
+      /* (__dirname, "../client/public/index.html") */
     )
   );
 });
