@@ -14,7 +14,13 @@ class DeleteButton extends Component {
           state: { props: res.data }
         })
       )
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (err.response.status === 403) {
+          history.push("/login");
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   render() {

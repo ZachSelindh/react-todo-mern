@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Header from "../Header";
-import "./style.css";
 import API from "../../utils/API";
+import history from "../../utils/history";
+import "./style.css";
 
 class EditTodo extends Component {
   constructor(props) {
@@ -9,9 +10,26 @@ class EditTodo extends Component {
     this.state = {
       id: "",
       title: "",
-      description: ""
+      description: "",
+      updated: false
     };
   }
+
+  componentWillMount = () => {
+    API.checkToken(localStorage.getItem("token"))
+      .then(res => {
+        console.log(res.data.message);
+      })
+      .catch(err => {
+        if (err.response.status === 403) {
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(err);
+        }
+      });
+  };
 
   componentDidMount = () => {
     this.setState({
@@ -23,7 +41,7 @@ class EditTodo extends Component {
 
   handleInputChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, updated: false });
   };
 
   handleSubmit = event => {
@@ -36,9 +54,19 @@ class EditTodo extends Component {
       },
       localStorage.getItem("token")
     )
-      /* .then(res => console.log(res.config.data)) */
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => {
+        console.log(res.data);
+        this.setState({ updated: true });
+      })
+      .catch(err => {
+        if (err.response.status === 403) {
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   render() {
@@ -49,11 +77,11 @@ class EditTodo extends Component {
           <div id="display-area-z" className="col-8">
             <div>
               <h1>Edit your Todo:</h1>
+              {this.state.updated ? <p>Todo updated!</p> : null}
               <form
                 className="todo-form"
                 autoComplete="off"
                 onSubmit={this.handleSubmit}
-                /*  action={`/api/todos/todo/update/${this.state.id}`} */
                 method="PUT"
               >
                 <input
