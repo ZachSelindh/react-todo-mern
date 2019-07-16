@@ -24,7 +24,7 @@ class DeleteButton extends Component {
   render() {
     return (
       <button key={this.props.author} onClick={this.handleClick}>
-        Delete Todo
+        Delete
       </button>
     );
   }

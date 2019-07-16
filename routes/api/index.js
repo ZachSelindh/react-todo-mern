@@ -32,6 +32,9 @@ router.get("/", verifyToken, (req, res) => {
   });
 });
 
+// Route for getting a particular todo
+/* router.get(); */
+
 router.get("/not-completed", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {

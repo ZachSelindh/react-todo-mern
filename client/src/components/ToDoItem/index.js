@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DeleteButton from "../Buttons/DeleteButton";
+import UpdateButton from "../Buttons/UpdateButton";
 import "./style.css";
 import API from "../../utils/API";
 import history from "../../utils/history";
@@ -40,7 +41,9 @@ class ToDoItem extends Component {
     return (
       <div className="container todo-item">
         <div className="row">
-          <h1>{this.props.title}</h1>
+          <div className="col-12">
+            <h1>{this.props.title}</h1>
+          </div>
         </div>
         <div className="row">
           <div className="col-8">
@@ -63,11 +66,14 @@ class ToDoItem extends Component {
 
           <div className="col-4">
             {this.state.currentAuthor ? (
-              <DeleteButton
-                todoID={this.props.todoID}
-                author={this.props.author}
-                calltodbNotCompleted={this.props.calltodbNotCompleted}
-              />
+              <div>
+                <UpdateButton todoID={this.props.todoID} />
+                <DeleteButton
+                  todoID={this.props.todoID}
+                  author={this.props.author}
+                  calltodbNotCompleted={this.props.calltodbNotCompleted}
+                />
+              </div>
             ) : null}
           </div>
         </div>
