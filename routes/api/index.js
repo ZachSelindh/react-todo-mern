@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Todo = require("../../models/ToDoItem");
+const Todo = require("../../models/TodoItem");
 const verifyToken = require("../../auth/verifyToken");
 const checkToken = require("../../auth/checkToken");
 const jwt = require("jsonwebtoken");
