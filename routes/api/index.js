@@ -33,7 +33,19 @@ router.get("/", verifyToken, (req, res) => {
 });
 
 // Route for getting a particular todo
-/* router.get(); */
+router.get("/todo/:todoID", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      // Get todo info
+      const { todoID } = req.params;
+      Todo.findById({ _id: todoID })
+        .then(todo => res.send(todo))
+        .catch(err => res.json(err));
+    }
+  });
+});
 
 router.get("/not-completed", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
@@ -43,8 +55,8 @@ router.get("/not-completed", verifyToken, (req, res) => {
       // Return todos
       Todo.find({ completed: false })
         .sort({ submitted_at: -1 })
-        .then(todo => res.send(todo))
-        .catch(err => res.status(422).json(err));
+        .then(todos => res.json(todos))
+        .catch(err => res.status(420).json(err));
     }
   });
 });
@@ -57,7 +69,7 @@ router.get("/completed", verifyToken, (req, res) => {
       // Return todos
       Todo.find({ completed: true })
         .sort({ submitted_at: -1 })
-        .then(todo => res.send(todo))
+        .then(todos => res.send(todos))
         .catch(err => res.status(422).json(err));
     }
   });
@@ -85,8 +97,8 @@ router.delete("/delete/:id", verifyToken, (req, res) => {
     } else {
       const { id } = req.params;
       Todo.findOneAndRemove({ _id: id })
-        .then(res => res.send(res))
-        .catch(err => res.json(err));
+        .then(todo => res.status(200).send(todo))
+        .catch(err => res.status(422).json(err));
     }
   });
 });

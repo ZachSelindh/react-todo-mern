@@ -11,8 +11,8 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  getTodo: function(id, token) {
-    return axios.get("/api/todos/" + id, {
+  getTodo: function(todoID, token) {
+    return axios.get("/api/todos/todo/" + todoID, {
       headers: { Authorization: "Bearer " + token }
     });
   },

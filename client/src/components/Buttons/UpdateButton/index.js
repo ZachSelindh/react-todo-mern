@@ -5,8 +5,9 @@ import "./style.css";
 class DeleteButton extends Component {
   handleClick = () => {
     var todoID = this.props.todoID;
+    console.log(todoID);
     API.getTodo(todoID, localStorage.getItem("token"))
-      .then(res => console.log(res))
+      .then(res => console.log(res.data))
       .catch(err => console.log(err));
   };
 
