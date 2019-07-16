@@ -1,111 +1,88 @@
 const express = require("express");
 const router = express.Router();
 const Todo = require("../../models/ToDoItem");
-const jwt = require("jsonwebtoken");
 const verifyToken = require("../../auth/verifyToken");
+const checkToken = require("../../auth/checkToken");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-router.post("/", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Create todo
-      Todo.create(req.body)
-        .then(newTodo => res.json(newTodo))
-        .catch(err => res.status(422).json(err));
-    }
-  });
+router.get("/", verifyToken, (req, res) => {
+  checkToken(
+    req,
+    // Return todos
+    Todo.find({})
+      .sort({ submitted_at: -1 })
+      .then(todo => res.send(todo))
+  );
 });
 
-router.get("/", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Return todos
-      Todo.find({})
-        .sort({ submitted_at: -1 })
-        .then(todo => res.send(todo));
-    }
-  });
+router.get("/not-completed", verifyToken, (req, res) => {
+  checkToken(
+    req,
+    // Return not completed todos
+    Todo.find({ completed: false })
+      .sort({ submitted_at: -1 })
+      .then(todos => res.json(todos))
+      .catch(err => res.status(420).json(err))
+  );
+});
+
+router.get("/completed", verifyToken, (req, res) => {
+  checkToken(
+    req,
+    // Return todos
+    Todo.find({ completed: true })
+      .sort({ submitted_at: -1 })
+      .then(todos => res.send(todos))
+      .catch(err => res.status(422).json(err))
+  );
+});
+
+router.post("/", verifyToken, (req, res) => {
+  checkToken(
+    req,
+    // Create todo
+    Todo.create(req.body)
+      .then(newTodo => res.json(newTodo))
+      .catch(err => res.status(422).json(err))
+  );
 });
 
 // Route for getting a particular todo
 router.get("/todo/:todoID", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Get todo info
-      const { todoID } = req.params;
-      Todo.findById({ _id: todoID })
-        .then(todo => res.send(todo))
-        .catch(err => res.json(err));
-    }
-  });
+  checkToken(
+    req,
+    // Get todo info
+    Todo.findById({ _id: req.params.todoID })
+      .then(todo => res.send(todo))
+      .catch(err => res.json(err))
+  );
 });
 
-router.get("/not-completed", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Return todos
-      Todo.find({ completed: false })
-        .sort({ submitted_at: -1 })
-        .then(todos => res.json(todos))
-        .catch(err => res.status(420).json(err));
-    }
-  });
-});
-
-router.get("/completed", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Return todos
-      Todo.find({ completed: true })
-        .sort({ submitted_at: -1 })
-        .then(todos => res.send(todos))
-        .catch(err => res.status(422).json(err));
-    }
-  });
-});
-
+// Get all todos by a particular author
 router.get("/author/:userID", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Return todos
-      const { userID } = req.params;
-      Todo.find({ author: userID })
-        .sort({ submitted_at: -1 })
-        .then(todos => res.send(todos))
-        .catch(err => res.status(422).json(err));
-    }
-  });
+  checkToken(
+    req,
+    // Return todos by author
+    Todo.find({ author: req.params.userID })
+      .sort({ submitted_at: -1 })
+      .then(todos => res.send(todos))
+      .catch(err => res.status(422).json(err))
+  );
 });
 
 // Update/edit a todo
 router.put("/todo/update/:todoID", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      // Return todos
-      const { todoID } = req.params;
-      const { user } = req.body;
-      Todo.findOneAndUpdate(
-        { _id: todoID, author: user },
-        { title: req.body.title, description: req.body.description }
-      )
-        .then(updatedTodo => res.send(updatedTodo))
-        .catch(err => res.json(err));
-    }
-  });
+  checkToken(
+    req,
+    // Return updated todos
+    Todo.findOneAndUpdate(
+      { _id: req.params.todoID, author: req.body.user },
+      { title: req.body.title, description: req.body.description }
+    )
+      .then(updatedTodo => res.send(updatedTodo))
+      .catch(err => res.json(err))
+  );
 });
 
 // Route for deleing a todo
@@ -114,6 +91,7 @@ router.delete("/todo/delete/", (config, res) => {
   if (typeof authHeader !== "undefined") {
     const authBearer = authHeader.split(" ");
     const bearerToken = authBearer[1];
+    // JWT.verify must be done here to account for config/data discrepency in router.delete
     jwt.verify(bearerToken, process.env.SECRET_KEY, (err, authData) => {
       if (err) {
         res.status(403).json({ message: "Invalid token / No token found" });

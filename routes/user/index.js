@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../../auth/verifyToken");
+const checkToken = require("../../auth/checkToken");
 require("dotenv").config();
 
 // User registration page
@@ -133,19 +134,15 @@ router.route("/login-new-user").post((req, res) => {
 
 // API route for getting username for Todo component.
 router.get("/get-user/:userID", verifyToken, (req, res) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
-    if (err) {
-      res.status(403).json({ message: "Invalid token / No token found" });
-    } else {
-      const { userID } = req.params;
-      User.findOne({ _id: userID })
-        .then(user => {
-          const { username, photoURL, email } = user;
-          res.send({ username, photoURL, email });
-        })
-        .catch(err => res.status(422).json({ err }));
-    }
-  });
+  checkToken(
+    req,
+    User.findOne({ _id: req.params.userID })
+      .then(user => {
+        const { username, photoURL, email } = user;
+        res.send({ username, photoURL, email });
+      })
+      .catch(err => res.status(422).json({ err }))
+  );
 });
 
 module.exports = router;
