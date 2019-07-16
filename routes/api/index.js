@@ -90,6 +90,24 @@ router.get("/author/:userID", verifyToken, (req, res) => {
   });
 });
 
+router.put("/todo/update/:todoID", verifyToken, (req, res) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.status(403).json({ message: "Invalid token / No token found" });
+    } else {
+      // Return todos
+      const { todoID } = req.params;
+      Todo.findOneAndUpdate(
+        { _id: todoID },
+        { title: req.body.title, description: req.body.description }
+      )
+        .then(updatedTodo => res.send(updatedTodo))
+        .catch(err => res.json(err));
+    }
+  });
+});
+
+// Route for deleing a todo
 router.delete("/delete/:id", verifyToken, (req, res) => {
   jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
     if (err) {

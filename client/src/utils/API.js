@@ -21,13 +21,18 @@ export default {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  deleteTodo: function(id, token) {
-    return axios.delete("/api/todos/delete/" + id, {
+  saveTodo: function(todoData, token) {
+    return axios.post("/api/todos", todoData, {
       headers: { Authorization: "Bearer " + token }
     });
   },
-  saveTodo: function(todoData, token) {
-    return axios.post("/api/todos", todoData, {
+  updateTodo: function(updateTodoID, newTodoData, token) {
+    return axios.put("/api/todos/todo/update/" + updateTodoID, newTodoData, {
+      headers: { Authorization: "Bearer " + token }
+    });
+  },
+  deleteTodo: function(id, token) {
+    return axios.delete("/api/todos/delete/" + id, {
       headers: { Authorization: "Bearer " + token }
     });
   },

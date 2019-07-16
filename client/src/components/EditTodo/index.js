@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "../Header";
 import "./style.css";
+import API from "../../utils/API";
 
 class EditTodo extends Component {
   constructor(props) {
@@ -25,6 +26,21 @@ class EditTodo extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    API.updateTodo(
+      this.state.id,
+      {
+        title: this.state.title,
+        description: this.state.description
+      },
+      localStorage.getItem("token")
+    )
+      /* .then(res => console.log(res.config.data)) */
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div>
@@ -37,7 +53,7 @@ class EditTodo extends Component {
                 className="todo-form"
                 autoComplete="off"
                 onSubmit={this.handleSubmit}
-                /* action="/api/todos" */
+                /*  action={`/api/todos/todo/update/${this.state.id}`} */
                 method="PUT"
               >
                 <input
